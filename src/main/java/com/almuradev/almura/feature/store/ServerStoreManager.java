@@ -231,6 +231,10 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
                             return true;
                         }
 
+                        if (store.getCreator().equalsIgnoreCase(player.getUniqueId())) {
+                            return false;
+                        }
+
                         return player.hasPermission(Almura.ID + ".store.admin");
                     })
                     .collect(Collectors.toSet())
@@ -240,12 +244,6 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
 
     public void openStoreManage(final Player player) {
         checkNotNull(player);
-
-        if (!player.hasPermission(Almura.ID + ".store.admin")) {
-            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
-              + "to manage stores!"), 5);
-            return;
-        }
 
         this.network.sendTo(player, new ClientboundStoreGuiResponsePacket(StoreGuiType.MANAGE));
     }
@@ -483,18 +481,18 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
         checkNotNull(player);
         checkNotNull(id);
 
-        if (!player.hasPermission(Almura.ID + ".store.admin")) {
-            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
-              + "to list items!"), 5);
-            return;
-        }
-
         final Store store = this.getStore(id).orElse(null);
 
         if (store == null) {
             this.logger.error("Player '{}' attempted to list selling items for store '{}' but the server has no knowledge of it. Syncing "
                 + "store registry...", player.getName(), id);
             this.syncStoreRegistryTo(player);
+            return;
+        }
+
+        if (!player.getUniqueId.equalsIgnoreCase(store.getCreator()) && !player.hasPermission(Almura.ID + ".store.admin")){
+            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
+              + "to list items!"), 5);
             return;
         }
 
@@ -588,18 +586,18 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
         checkNotNull(id);
         checkNotNull(candidates);
 
-        if (!player.hasPermission(Almura.ID + ".store.admin")) {
-            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
-              + "to modify listed items!"), 5);
-            return;
-        }
-
         final Store store = this.getStore(id).orElse(null);
 
         if (store == null) {
             this.logger.error("Player '{}' attempted to modify selling items for store '{}' but the server has no knowledge of it. Syncing "
                 + "store registry...", player.getName(), id);
             this.syncStoreRegistryTo(player);
+            return;
+        }
+
+        if (!player.getUniqueId.equalsIgnoreCase(store.getCreator()) && !player.hasPermission(Almura.ID + ".store.admin")){
+            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
+              + "to modify listed items!"), 5);
             return;
         }
 
@@ -675,18 +673,18 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
         checkNotNull(recNos);
         checkState(!recNos.isEmpty());
 
-        if (!player.hasPermission(Almura.ID + ".store.admin")) {
-            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
-              + "to unlist items!"), 5);
-            return;
-        }
-
         final Store store = this.getStore(id).orElse(null);
 
         if (store == null) {
             this.logger.error("Player '{}' attempted to de-list selling items for store '{}' but the server has no knowledge of it. Syncing "
                 + "store registry...", player.getName(), id);
             this.syncStoreRegistryTo(player);
+            return;
+        }
+
+        if (!player.getUniqueId.equalsIgnoreCase(store.getCreator()) && !player.hasPermission(Almura.ID + ".store.admin")){
+            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
+              + "to unlist items!"), 5);
             return;
         }
 
@@ -840,18 +838,18 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
         checkNotNull(player);
         checkNotNull(id);
 
-        if (!player.hasPermission(Almura.ID + ".store.admin")) {
-            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
-              + "to list items!"), 5);
-            return;
-        }
-
         final Store store = this.getStore(id).orElse(null);
 
         if (store == null) {
             this.logger.error("Player '{}' attempted to list buying items for store '{}' but the server has no knowledge of it. Syncing "
                 + "store registry...", player.getName(), id);
             this.syncStoreRegistryTo(player);
+            return;
+        }
+
+        if (!player.getUniqueId.equalsIgnoreCase(store.getCreator()) && !player.hasPermission(Almura.ID + ".store.admin")){
+            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
+              + "to list items!"), 5);
             return;
         }
 
@@ -945,18 +943,18 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
         checkNotNull(id);
         checkNotNull(candidates);
 
-        if (!player.hasPermission(Almura.ID + ".store.admin")) {
-            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
-              + "to modify listed items!"), 5);
-            return;
-        }
-
         final Store store = this.getStore(id).orElse(null);
 
         if (store == null) {
             this.logger.error("Player '{}' attempted to modify buying items for store '{}' but the server has no knowledge of it. Syncing "
                 + "store registry...", player.getName(), id);
             this.syncStoreRegistryTo(player);
+            return;
+        }
+
+        if (!player.getUniqueId.equalsIgnoreCase(store.getCreator()) && !player.hasPermission(Almura.ID + ".store.admin")){
+            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
+              + "to modify listed items!"), 5);
             return;
         }
 
@@ -1078,11 +1076,6 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
         checkNotNull(recNos);
         checkState(!recNos.isEmpty());
 
-        if (!player.hasPermission(Almura.ID + ".store.admin")) {
-            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
-              + "to unlist items!"), 5);
-            return;
-        }
 
         final Store store = this.getStore(id).orElse(null);
 
@@ -1090,6 +1083,12 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             this.logger.error("Player '{}' attempted to de-list buying items for store '{}' but the server has no knowledge of it. Syncing "
                 + "store registry...", player.getName(), id);
             this.syncStoreRegistryTo(player);
+            return;
+        }
+
+        if (!player.getUniqueId.equalsIgnoreCase(store.getCreator()) && !player.hasPermission(Almura.ID + ".store.admin")){
+            this.notificationManager.sendPopupNotification(player, Text.of(TextColors.RED, "Store"), Text.of("You do not have permission "
+              + "to unlist items!"), 5);
             return;
         }
 

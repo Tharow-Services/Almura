@@ -76,27 +76,28 @@ public class StoreScreen extends BasicScreen {
     private static final Map<ItemFinder, Object> itemFinderRelationshipMap = new LinkedHashMap<>();
 
     private final Store store;
-    private final boolean isAdmin;
+    private final boolean isAdmin, isOwner;
     private final int selectedTabColor = 0;
     private final int tabWidth = 119;
     private final int tabHeight = 16;
-    private final List<ItemStack> adminBaseList = new ArrayList<>();
+    private final List<ItemStack> adminBaseList = new ArrayList<>(), ownerBaseList = new ArrayList<>();
 
     private SideType currentSide = SideType.BUY;
     private UIButton buttonTransactStack, buttonTransactOne, buttonTransactAll, buttonTransactQuantity, buttonAdminList, buttonAdminUnlist;
     private BasicContainer<?> buyTabContainer, sellTabContainer;
     private BasicList<StoreItem> itemList;
-    private BasicList<ItemStack> adminItemList;
-    private UILabel typeLabel, adminListTotalLabel, buyTabLabel, sellTabLabel;
+    private BasicList<ItemStack> adminItemList, ownerItemList;
+    private UILabel typeLabel, adminListTotalLabel, buyTabLabel, sellTabLabel, ownerListTotalLabel;
     private BasicLine thisDoesNotExistLine;
     private UISelect<ItemFinder> locationSelect;
     private BasicTextBox itemDisplayNameSearchBox;
-    private BasicTextBox adminSearchTextBox;
+    private BasicTextBox adminSearchTextBox, ownerItemList;
     private UISelect<SortType> comboBoxSortType;
 
-    public StoreScreen(final Store store, final boolean isAdmin) {
+    public StoreScreen(final Store store, final boolean isAdmin, final boolean isOwner) {
         this.store = store;
         this.isAdmin = isAdmin;
+        this.isOwner = isOwner;
 
         if (itemFinderRelationshipMap.isEmpty()) {
             // Always clear inventory and store items
@@ -356,7 +357,77 @@ public class StoreScreen extends BasicScreen {
             this.locationSelect.selectFirst();
         }
 
+        // Logic for owner pane
+        if (this.isAdmin) {
+            // Adjust form width
+            form.setWidth(form.getWidth() + 224);
+
+            // Create owner pane
+            final BasicContainer<?> ownerContainer = new BasicContainer(this, 220, UIComponent.INHERITED);
+            ownerContainer.setPosition(BasicScreen.getPaddedX(storeContainer, 4), 0);
+            ownerContainer.setBorder(FontColors.WHITE, 1, 185);
+            ownerContainer.setPadding(3);
+            ownerContainer.setColor(0);
+
+            // Buy tab label
+            //this.typeLabel = new UILabel(this, TextFormatting.WHITE + "Type: ");
+            //this.typeLabel.setPosition(0, 2, Anchor.TOP | Anchor.LEFT);
+
+            // Item location selection
+            //this.locationSelect = new UISelect<>(this, UIComponent.INHERITED);
+            //this.locationSelect.setOptions(itemFinderRelationshipMap.keySet());
+            //this.locationSelect.setLabelFunction(o -> I18n.format(o.translationKey));
+            //this.locationSelect.setPosition(30, 0);
+            //this.locationSelect.setSize(184,12);
+            //this.locationSelect.maxDisplayedOptions(24);
+            //this.locationSelect.register(this);
+
+            // Search text box
+            this.ownerSearchTextBox = new BasicTextBox(this, "");
+            this.ownerSearchTextBox.setSize(UIComponent.INHERITED, 12);
+            this.ownerSearchTextBox.setPosition(30, 0);
+            this.ownerSearchTextBox.register(this);
+
+            // Item list
+            this.ownerItemList = new BasicList<>(this, UIComponent.INHERITED,
+                    BasicScreen.getPaddedHeight(form) - this.locationSelect.getHeight() - this.ownerSearchTextBox.getHeight() - 28);
+            this.ownerItemList.setItemComponentFactory(AdminItemComponent::new);
+            this.ownerItemList.setItemComponentSpacing(1);
+            this.ownerItemList.setPosition(0, BasicScreen.getPaddedY(this.ownerSearchTextBox, 2));
+            this.ownerItemList.setPadding(2);
+            this.ownerItemList.setBorder(FontColors.WHITE, 1, 185);
+            this.ownerItemList.setSelectConsumer(i -> this.updateOwnerControls());
+
+            this.buttonOwnerList = new UIButtonBuilder(this)
+                    .width(50)
+                    .anchor(Anchor.BOTTOM | Anchor.LEFT)
+                    .enabled(false)
+                    .onClick(this::listOrModify)
+                    .text(I18n.format("almura.feature.common.button.list"))
+                    .build("button.list");
+            this.buttonOwnerUnlist = new UIButtonBuilder(this)
+                    .width(50)
+                    .anchor(Anchor.BOTTOM | Anchor.LEFT)
+                    .position(BasicScreen.getPaddedX(this.buttonAdminList, 2), 0)
+                    .enabled(false)
+                    .onClick(this::unlist)
+                    .text(I18n.format("almura.feature.common.button.unlist"))
+                    .build("button.unlist");
+
+            this.ownerListTotalLabel = new UILabel(this, TextFormatting.WHITE + I18n.format("almura.feature.common.text.total") + ": ");
+            this.ownerListTotalLabel.setPosition(0, -2, Anchor.BOTTOM | Anchor.RIGHT);
+
+            ownerContainer.add(this.ownerSearchTextBox, this.onwerItemList, this.buttonOwnerList,
+                               this.buttonOwnerUnlist, this.ownerListTotalLabel);
+
+            form.add(ownerContainer);
+
+            // Select the first item
+            this.locationSelect.selectFirst();
+        }
+
         addToScreen(form);
+
     }
 
     @Override
@@ -420,11 +491,26 @@ public class StoreScreen extends BasicScreen {
             this.adminListTotalLabel.setText(TextFormatting.WHITE + I18n.format("almura.feature.common.text.total") + ": "
               + this.adminItemList.getItems().size());
         }
+        if (this.ownerSearchTextBox.equals(event.getComponent())) {
+            if (this.ownerSearchTextBox.getText().isEmpty()) {
+                return;
+            }
+
+            this.ownerItemList.setItems(this.adminBaseList
+                    .stream()
+                    .filter(i -> i.getDisplayName().toLowerCase().contains(event.getNewValue().toLowerCase()))
+                    .sorted(Comparator.comparing(ItemStack::getDisplayName))
+                    .collect(Collectors.toList()));
+
+            this.ownerListTotalLabel.setText(TextFormatting.WHITE + I18n.format("almura.feature.common.text.total") + ": "
+              + this.ownerItemList.getItems().size());
+        }
     }
 
     @Subscribe
     private void onSelect(final UISelect.SelectEvent<ItemFinder> event) {
         this.createAdminControls(event.getNewValue());
+        this.createOwnerControls(event.getNewValue());
     }
 
     public void refresh(final boolean createControls) {
@@ -450,6 +536,7 @@ public class StoreScreen extends BasicScreen {
 
         this.updateStoreControls();
         this.updateAdminControls();
+        this.updateOwnerControls();
     }
 
     private void search() {
@@ -519,7 +606,7 @@ public class StoreScreen extends BasicScreen {
     }
 
     private void listOrModify() {
-        final ItemStack selectedItem = this.adminItemList.getSelectedItem();
+        final ItemStack selectedItem = this.adminItemList.getSelectedItem().orElse(this.ownerItemList.getSelectedItem());
         if (selectedItem == null) {
             return;
         }
@@ -706,6 +793,60 @@ public class StoreScreen extends BasicScreen {
           .forEach(i -> ((AdminItemComponent) i).update());
 
         this.adminListTotalLabel.setText(TextFormatting.WHITE + I18n.format("almura.feature.common.text.total") + ": " + this.adminItemList.getItems().size());
+    }
+
+    // Owner Controls //
+    @SuppressWarnings("unchecked")
+    private void createOwnerControls(final ItemFinder finder) {
+        // Clear the base list
+        this.ownerBaseList.clear();
+
+        // Set the base list to items from item finder sorted by display name
+        this.ownerBaseList.addAll((List<ItemStack>) finder.getItems(itemFinderRelationshipMap.get(finder))
+          .stream()
+          .sorted(Comparator.comparing(ItemStack::getDisplayName))
+          .collect(Collectors.toList()));
+
+        // Set the visible item list to the base list filtered by search text
+        this.ownerItemList.setItems(this.ownerBaseList
+          .stream()
+          .filter(i -> i.getDisplayName().toLowerCase().contains(this.ownerSearchTextBox.getText().toLowerCase()))
+          .collect(Collectors.toList()));
+
+        // Attempt to select the first item
+        this.ownerItemList.setSelectedItem(this.ownerItemList.getItems().stream().findFirst().orElse(null));
+
+        this.updateOwnerControls();
+    }
+
+    private void updateOwnerControls() {
+        if (!this.isOwner) {
+            return;
+        }
+        final ItemStack selectedItem = this.ownerItemList.getSelectedItem();
+
+        this.buttonOwnerList.setEnabled(selectedItem != null);
+
+        final Optional<BuyingItem> buyingItem = this.store.getBuyingItems()
+                .stream()
+                .filter(i -> StoreScreen.isStackEqualIgnoreSize(i.asRealStack(), selectedItem))
+                .findAny();
+        final Optional<SellingItem> sellingItem = this.store.getSellingItems()
+                .stream()
+                .filter(i -> StoreScreen.isStackEqualIgnoreSize(i.asRealStack(), selectedItem))
+                .findAny();
+
+        this.buttonOwnerUnlist.setEnabled(buyingItem.isPresent() || sellingItem.isPresent());
+
+        final String status = (buyingItem.isPresent() || sellingItem.isPresent()) ? "modify" : "list";
+        this.buttonOwnerList.setText(I18n.format("almura.feature.common.button." + status));
+
+        this.ownerItemList.getComponents()
+          .stream()
+          .filter(i -> i instanceof AdminItemComponent)
+          .forEach(i -> ((AdminItemComponent) i).update());
+
+        this.ownerListTotalLabel.setText(TextFormatting.WHITE + I18n.format("almura.feature.common.text.total") + ": " + this.ownerItemList.getItems().size());
     }
 
     public static boolean isStackEqualIgnoreSize(@Nullable final ItemStack a, @Nullable final ItemStack b) {
