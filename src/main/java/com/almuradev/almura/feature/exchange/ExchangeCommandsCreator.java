@@ -39,7 +39,7 @@ final class ExchangeCommandsCreator {
             )
             .permission(Almura.ID + ".exchange.manage")
             .executor((src, args) -> {
-                final Player player = args.<Player>getOne("player").orElse((Player) src);
+                final Player player = args.<Player>getOne("player").orElse(null);
                 if (player == null) {
                     return CommandResult.empty();
                 }
@@ -61,7 +61,10 @@ final class ExchangeCommandsCreator {
             ))
             .permission(Almura.ID + ".exchange.open")
             .executor((src, args) -> {
-                final Player player = args.<Player>getOne("player").orElse((Player) src);
+                final Player player = args.<Player>getOne("player").orElse(null);
+                if (player == null) {
+                    return CommandResult.empty();
+                }
 
                 final String id = args.<String>getOne("id").orElse(null);
                 if (id == null) {

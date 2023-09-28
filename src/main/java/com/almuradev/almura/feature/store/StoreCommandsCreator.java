@@ -40,7 +40,7 @@ final class StoreCommandsCreator {
                 )
             .permission(Almura.ID + ".store.manage")
             .executor((src, args) -> {
-                final Player player = args.<Player>getOne("player").orElse((Player) src);
+                final Player player = args.<Player>getOne("player").orElse(null);
                 if (player == null) {
                     return CommandResult.empty();
                 }
@@ -62,7 +62,10 @@ final class StoreCommandsCreator {
             ))
             .permission(Almura.ID + ".store.open")
             .executor((src, args) -> {
-                final Player player = args.<Player>getOne("player").orElse((Player) src);
+                final Player player = args.<Player>getOne("player").orElse(null);
+                if (player == null) {
+                    return null;
+                }
 
                 final String id = args.<String>getOne("id").orElse(null);
                 if (id == null) {
