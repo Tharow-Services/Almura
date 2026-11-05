@@ -10,7 +10,9 @@ package com.almuradev.almura.feature.claim;
 import com.almuradev.almura.feature.claim.gui.ClaimManageScreen;
 import com.almuradev.almura.feature.claim.network.ClientboundClaimDataPacket;
 import com.almuradev.almura.feature.claim.network.ClientboundClaimGuiResponsePacket;
+import com.almuradev.almura.feature.claim.network.ClientboundClaimVisualPacket;
 import com.almuradev.almura.feature.claim.network.ServerboundClaimGuiAbandonRequestPacket;
+import com.almuradev.almura.feature.claim.network.ServerboundClaimGuiFlagsRequestPacket;
 import com.almuradev.almura.feature.claim.network.ServerboundClaimGuiForSaleRequestPacket;
 import com.almuradev.almura.feature.claim.network.ServerboundClaimGuiRequestPacket;
 import com.almuradev.almura.feature.claim.network.ServerboundClaimGuiSaveRequestPacket;
@@ -19,7 +21,9 @@ import com.almuradev.almura.feature.claim.network.ServerboundClaimGuiToggleDenyM
 import com.almuradev.almura.feature.claim.network.ServerboundClaimGuiToggleVisualsRequestPacket;
 import com.almuradev.almura.feature.claim.network.handler.ClientboundClaimDataPacketHandler;
 import com.almuradev.almura.feature.claim.network.handler.ClientboundClaimGuiResponsePacketHandler;
+import com.almuradev.almura.feature.claim.network.handler.ClientboundClaimVisualPacketHandler;
 import com.almuradev.almura.feature.claim.network.handler.ServerboundClaimGuiAbandonRequestPacketHandler;
+import com.almuradev.almura.feature.claim.network.handler.ServerboundClaimGuiFlagsRequestPacketHandler;
 import com.almuradev.almura.feature.claim.network.handler.ServerboundClaimGuiForSaleRequestPacketHandler;
 import com.almuradev.almura.feature.claim.network.handler.ServerboundClaimGuiRequestPacketHandler;
 import com.almuradev.almura.feature.claim.network.handler.ServerboundClaimGuiSaveRequestPacketHandler;
@@ -42,6 +46,7 @@ public final class ClaimModule extends AbstractModule implements CommonBinder {
         // Note: the order in which the packets are registered will affect everything, register client/server packets in the same order.
         this.packet().bind(ClientboundClaimDataPacket.class, binder -> binder.handler(ClientboundClaimDataPacketHandler.class, Platform.Type.CLIENT));
         this.packet().bind(ClientboundClaimGuiResponsePacket.class, binder -> binder.handler(ClientboundClaimGuiResponsePacketHandler.class, Platform.Type.CLIENT));
+        this.packet().bind(ClientboundClaimVisualPacket.class, binder -> binder.handler(ClientboundClaimVisualPacketHandler.class, Platform.Type.CLIENT));
 
         if (SpongeImplHooks.isDeobfuscatedEnvironment()) {
             loadServerModules();
@@ -56,6 +61,7 @@ public final class ClaimModule extends AbstractModule implements CommonBinder {
                 protected void configure() {
 
                     this.facet().add(ClientClaimManager.class);
+                    this.facet().add(ClientClaimVisuals.class);
 
                     if (!SpongeImplHooks.isDeobfuscatedEnvironment()) { //Only register these packets this way IF running production mode
                         System.out.println("Registering Client Packets!!!");
@@ -66,6 +72,7 @@ public final class ClaimModule extends AbstractModule implements CommonBinder {
                         this.packet().bind(ServerboundClaimGuiToggleDenyMessagesRequestPacket.class);
                         this.packet().bind(ServerboundClaimGuiForSaleRequestPacket.class);
                         this.packet().bind(ServerboundClaimGuiSetSpawnRequestPacket.class);
+                        this.packet().bind(ServerboundClaimGuiFlagsRequestPacket.class);
                     }
 
                     this.requestStaticInjection(ClaimManageScreen.class);
@@ -85,6 +92,7 @@ public final class ClaimModule extends AbstractModule implements CommonBinder {
         this.packet().bind(ServerboundClaimGuiToggleDenyMessagesRequestPacket.class, binder -> binder.handler(ServerboundClaimGuiToggleDenyMessagesRequestPacketHandler.class, Platform.Type.SERVER));
         this.packet().bind(ServerboundClaimGuiForSaleRequestPacket.class, binder -> binder.handler(ServerboundClaimGuiForSaleRequestPacketHandler.class, Platform.Type.SERVER));
         this.packet().bind(ServerboundClaimGuiSetSpawnRequestPacket.class, binder -> binder.handler(ServerboundClaimGuiSetSpawnRequestPacketHandler.class, Platform.Type.SERVER));
+        this.packet().bind(ServerboundClaimGuiFlagsRequestPacket.class, binder -> binder.handler(ServerboundClaimGuiFlagsRequestPacketHandler.class, Platform.Type.SERVER));
         this.facet().add(ServerClaimManager.class);
     }
 }
