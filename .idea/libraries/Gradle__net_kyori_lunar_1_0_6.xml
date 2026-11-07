@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: net.kyori:lunar:1.0.6" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.kyori" artifactId="lunar" version="1.0.6" baseVersion="1.0.6" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/lunar/1.0.6/5d265c0f3c1b40a537a4bab0229e568e88543975/lunar-1.0.6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/lunar/1.0.6/b71c508ad5c04361df80906ff25bcd0ecf024d02/lunar-1.0.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/lunar/1.0.6/21e175f62697907308d488c7e0e6cf37fa5932df/lunar-1.0.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

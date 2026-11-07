@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: net.kyori:blizzard:1.0.4-JDK8144185" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.kyori" artifactId="blizzard" version="1.0.4-JDK8144185" baseVersion="1.0.4-JDK8144185" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/blizzard/1.0.4-JDK8144185/87ef23989d904eb38e8da5742744b833db133341/blizzard-1.0.4-JDK8144185.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/blizzard/1.0.4-JDK8144185/bd077d6cc8df63992fbe77deb8cbd9d3fc5eda60/blizzard-1.0.4-JDK8144185-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/blizzard/1.0.4-JDK8144185/b0d3f7b68982317a52e3b07b7f896f32a7e067b1/blizzard-1.0.4-JDK8144185-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

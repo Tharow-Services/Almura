@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: net.kyori:membrane:1.0.6" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.kyori" artifactId="membrane" version="1.0.6" baseVersion="1.0.6" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/membrane/1.0.6/63b77a76537c8b0be0e0165237901ca17b40523b/membrane-1.0.6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/membrane/1.0.6/296fe409024930cecee5d273c5027bfdc51cdd32/membrane-1.0.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/membrane/1.0.6/a9e65772b62a7272f852ebfee01389f607773380/membrane-1.0.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: net.kyori:event-method:3.0.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.kyori" artifactId="event-method" version="3.0.0" baseVersion="3.0.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/event-method/3.0.0/85fe9bbf8ebadde4c82602af29352ba5db06e8e5/event-method-3.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/event-method/3.0.0/115875868fcabb2aff67a96b3a12c7928d38405/event-method-3.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/event-method/3.0.0/be1d7487c94358ad528daf4f0e4189ed4f03e3e/event-method-3.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

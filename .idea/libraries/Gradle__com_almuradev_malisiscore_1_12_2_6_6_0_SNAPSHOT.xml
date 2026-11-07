@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.almuradev" artifactId="malisiscore" version="1.12.2-6.6.0-SNAPSHOT" baseVersion="1.12.2-6.6.0-SNAPSHOT" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/9.8.2/transforms/d105b10f2536e896feec04088448ea7c/transformed/malisiscore-1.12.2-6.6.0-SNAPSHOT-deobf.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

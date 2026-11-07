@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.cleanroommc:mixinextras-common:0.5.6" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.cleanroommc" artifactId="mixinextras-common" version="0.5.6" baseVersion="0.5.6" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.cleanroommc/mixinextras-common/0.5.6/c5d1dd37305763cf343a46380ab3ff4b43b5313a/mixinextras-common-0.5.6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.cleanroommc/mixinextras-common/0.5.6/5f9848eb3037fe004d72f6e237f4a8ebf5b146ce/mixinextras-common-0.5.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.cleanroommc/mixinextras-common/0.5.6/51d95b87c79f1c3bc74b1589e7331dbbe6e39a9a/mixinextras-common-0.5.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

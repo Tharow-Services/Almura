@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: jakarta.xml.ws:jakarta.xml.ws-api:4.0.3" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="jakarta.xml.ws" artifactId="jakarta.xml.ws-api" version="4.0.3" baseVersion="4.0.3" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jakarta.xml.ws/jakarta.xml.ws-api/4.0.3/30b8a7abd7b3958461d8256db31816dd2ae6eb85/jakarta.xml.ws-api-4.0.3.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jakarta.xml.ws/jakarta.xml.ws-api/4.0.3/a10cd30f33afa45f88647d4e23a98edfc1f0d82d/jakarta.xml.ws-api-4.0.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jakarta.xml.ws/jakarta.xml.ws-api/4.0.3/1c89086d7bed0ad11be48bf6fa97036036132d1/jakarta.xml.ws-api-4.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

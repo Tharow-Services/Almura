@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: net.kyori:event-api:5.0.0-SNAPSHOT" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.kyori" artifactId="event-api" version="5.0.0-SNAPSHOT" baseVersion="5.0.0-SNAPSHOT" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/event-api/5.0.0-SNAPSHOT/49562326c91290eacf661c6da0a2d3be49004238/event-api-5.0.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/event-api/5.0.0-SNAPSHOT/19e32f52a8d1d36e7b0f975dcf18accba298a082/event-api-5.0.0-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/event-api/5.0.0-SNAPSHOT/629be8549c43c7ebabad2ce8b2f975a207c9a4b6/event-api-5.0.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -59,7 +59,6 @@ Thumbs.db
 .classpath
 .externalToolBuilders
 .gradle
-.idea
 .project
 .settings
 classes
@@ -68,7 +67,6 @@ nbproject
 atlassian-ide-plugin.xml
 build.xml
 nb-configuration.xml
-*.iml
 *.ipr
 *.iws
 src/main/generated/

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.griefdefender:api:2.1.0-SNAPSHOT" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.griefdefender" artifactId="api" version="2.1.0-SNAPSHOT" baseVersion="2.1.0-SNAPSHOT" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.griefdefender/api/2.1.0-SNAPSHOT/e7499b0a3eed6a53776959bede439168a7943cda/api-2.1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

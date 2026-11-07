@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Almura.iml" filepath="$PROJECT_DIR$/.idea/modules/Almura.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Almura.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Almura.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Almura.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Almura.test.iml" />
+    </modules>
+  </component>
+</project>

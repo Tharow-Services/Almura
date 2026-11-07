@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: io.netty:netty-transport-rxtx:4.2.16.Final" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="io.netty" artifactId="netty-transport-rxtx" version="4.2.16.Final" baseVersion="4.2.16.Final" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-rxtx/4.2.16.Final/9c2a92b1a066a73f958f4584972a142bd4e54dbc/netty-transport-rxtx-4.2.16.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-rxtx/4.2.16.Final/ea0497cbf2ec509c9d1f02b95b6cea1fb349175f/netty-transport-rxtx-4.2.16.Final-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-rxtx/4.2.16.Final/2f206c77ebec65c15a308e1dd914505ce27247e7/netty-transport-rxtx-4.2.16.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

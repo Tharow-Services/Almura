@@ -1,82 +1,20 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+import org.jetbrains.gradle.ext.Gradle
 
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-        maven {
-            name = 'forge'
-            url = 'https://maven.minecraftforge.net/'
-        }
-        maven {
-            name = 'oss-sonatype-public'
-            url = 'https://oss.sonatype.org/content/repositories/public/'
-        }
-        maven {
-            name = 'sponge'
-            url = 'https://repo.spongepowered.org/maven'
-        }
-        maven {
-            url = 'https://plugins.gradle.org/m2/'
-        }
-    }
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
-        classpath "net.minecraftforge.gradle:ForgeGradle:${project.forgeGradleVersion}"
-        classpath "gradle.plugin.net.minecrell:licenser:0.4.1"
-        classpath 'org.spongepowered:mixingradle:0.6+'
-        classpath 'org.spongepowered:spongegradle:0.8.1'
-        classpath 'nu.studer:gradle-jooq-plugin:3.0.2'
-    }
+plugins {
+    id 'java'
+    id 'com.cleanroommc.cleanroomgradle'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'org.jooq.jooq-codegen-gradle' version '3.21.9'
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.4.1'
+    id 'org.spongepowered.gradle.plugin' version '2.5.0'
+    //id("org.spongepowered.plugin") version "0.9.0"
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'net.minecrell.licenser'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'org.spongepowered.gradle'
-apply plugin: 'org.spongepowered.plugin'
-apply plugin: 'nu.studer.jooq'
-
-// Minecraft 1.12 needs Guava 21; SpongeForge's Guice would otherwise pull in 27.1 and crash the dev client
-configurations.all {
-    resolutionStrategy.force 'com.google.guava:guava:21.0'
+base {
+    archivesName = project.name.toLowerCase()
 }
-
-defaultTasks 'clean', 'licenseFormat', 'sortAccessTransformers', 'sortClassFields', 'build'
-
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
-archivesBaseName = project.name.toLowerCase()
-// The build number: the jar's name, mcmod.info and Almura.buildNumber (the window title and About menu) all take it from here
-ext.internalBuild = '123'
-version = "mc[${project.minecraftVersion}]-forge[${project.forgeBuild}]-sf[${project.spongeImplVersion.split("-")[2]}]-b${project.internalBuild}"
-
-minecraft {
-    version = "${project.forgeVersion}"
-    mappings = project.mcpMappings
-    runDir = 'run'
-    useDepAts = true
-    coreMod = project.coreMod
-
-    // We don't use the obfuscated dev jar currently
-    makeObfSourceJar = false
-
-    // Almura.buildNumber, written into the source Gradle compiles (an IntelliJ run compiles it as is, and shows "dev")
-    replace '@internalBuild@', project.internalBuild
-    replaceIn 'Almura.java'
-}
-
-mixin {
-    add sourceSets.main, "mixins.${project.name.toLowerCase()}.refmap.json"
-}
-
-deobfMcMCP { failOnAtError = false }
-deobfMcSRG { failOnAtError = false }
 
 repositories {
-	// These three always first!!!
     mavenLocal()
     mavenCentral()
     flatDir {
@@ -110,10 +48,10 @@ repositories {
         name = "LuckPerms"
         url = "https://repo.lucko.me/"
     }
-    //maven {
-    //    name = 'jitpack'
-    //    url = 'https://jitpack.io'
-    //}
+    maven {
+        name = 'jitpack'
+        url = 'https://jitpack.io'
+    }
     maven {
         name = 'glare'
         url = 'https://repo.glaremasters.me/repository/bloodshot'
@@ -122,97 +60,91 @@ repositories {
         name = 'ic2'
         url = 'https://maven.ic2.player.to/'
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name 'CurseMaven'
+                url 'https://curse.cleanroommc.com'
+            }
+        }
+        filter {
+            includeGroup 'curse.maven'
+        }
+    }
 }
 
-configurations.all {
-    resolutionStrategy {
-        force 'com.typesafe:config:1.3.1'
-    }
+tasks.register('runServer') {
+    overwrite = true
+    // your new configuration here
 }
 
 dependencies {
-    compile ("org.spongepowered:spongeforge:${project.spongeImplVersion}:dev") {
-        exclude module: 'testplugins'
-	    exclude module: 'testmods'
-    }
-    // Almura utilized Kyori libraries for the Content Loader, Binding and Injector system.
-    compile 'net.kyori:indigo:1.0.0-SNAPSHOT'
-    compile 'net.kyori:lunar:1.0.5-SNAPSHOT'
-    compile 'net.kyori:membrane:1.0.5'
-    compile 'net.kyori:violet:1.0.0'
-    compile 'net.kyori:text-api:3.0.4'
-    compile "net.kyori:text-serializer-legacy:3.0.4"
-    compile "net.kyori:event-api:3.0.0"
-    compile "net.kyori:event-api:5.0.0-SNAPSHOT"
-    compile "net.kyori:event-method:3.0.0"
-    // 3 following dependencies libraries are to support GD's API which uses re-located libraries....
-    //compile 'com.griefdefender.lib.kyori:examination-api-gd:1.1.0'
-    //compile 'com.griefdefender.lib.kyori:text-api-gd:3.0.4'
-    //compile 'com.griefdefender.lib.kyori:text-serializer-legacy-gd:3.0.4'
-    // GD's API for GD (Sponge) 2.0.1 (11/5/2021), specifically the shaded version which the plugin uses for its relocated libraries...
-    //compile ("com.github.bloodmc:GriefDefenderAPI-2.0.0-Shaded:2.0.0-20210822.184639-9-shaded")
-    // Remember to update this entry for Nucleus if the API gets behind the currently plugin version being used.
-    compile 'io.github.nucleuspowered:nucleus-api:2.4.0'
+    implementation cleanroom.userdev(cleanroom_version)
+    implementation 'net.kyori:indigo:1.0.0-SNAPSHOT'
+    implementation 'net.kyori:lunar:1.0.5-SNAPSHOT'
+    implementation 'net.kyori:membrane:1.0.5'
+    implementation 'net.kyori:violet:1.0.0'
+    implementation 'net.kyori:text-api:3.0.4'
+    implementation "net.kyori:text-serializer-legacy:3.0.4"
+    implementation "net.kyori:event-api:3.0.0"
+    implementation "net.kyori:event-api:5.0.0-SNAPSHOT"
+    implementation "net.kyori:event-method:3.0.0"
+
+    implementation 'io.github.nucleuspowered:nucleus-api:2.4.0'
     // Remember to update this entry for LuckPerms if the API gets behind the currently plugin version being used.
-    compile "net.luckperms:api:5.3"
-    deobfProvided ('com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT') {
-        transitive = false
-    }
+    implementation "net.luckperms:api:5.3"
+    compileOnly deobf('com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT')
     // Attempt to use GD 2.0.3 API change.
-    compile 'com.griefdefender:api:2.1.0-SNAPSHOT'
+    implementation 'com.griefdefender:api:2.1.0-SNAPSHOT'
     // IndustrialCraft 2 energy API for machines. Optional at runtime: only used when IC2 is installed, so it's neither shaded nor required.
-    compileOnly 'net.industrial-craft:industrialcraft-2:2.8.220-ex112:api'
-    compile "net.kyori:adventure-api:4.9.3"
+    implementation 'net.industrial-craft:industrialcraft-2:2.8.220-ex112:api'
+    implementation "net.kyori:adventure-api:4.9.3"
     // UltimateChat is a server plugin: compile against it, but don't load it in the dev client (its startup fails without a server).
     // Almura only uses it when the plugin is installed (see UchatUtil).
-    compileOnly 'br.net.fabiozumbi12.UltimateChat:UltimateChat-Sponge-56-1.9.1'
-    compile 'org.spongepowered:configurate-json:3.5'
-    compile 'org.inspirenxe:skills:1.0.0-SNAPSHOT:api'
-    compile 'com.almuradev:toolbox:1.0.0-SNAPSHOT'
-    compile 'org.inspirenxe:skills:1.0.0-SNAPSHOT'
-    compile "org.jooq:jooq:${project.jooqVersion}"
-    compile "org.jooq:jooq-meta:${project.jooqVersion}"
-    compile "org.jooq:jooq-codegen:${project.jooqVersion}"
-    jooqRuntime "org.jooq:jooq-meta-extensions:${project.jooqVersion}"
-    testCompile 'junit:junit:4.12'
+    implementation 'br.net.fabiozumbi12.UltimateChat:UltimateChat-Sponge-56-1.9.1'
+    implementation 'org.spongepowered:configurate-gson:3.7.3'
+    implementation 'com.almuradev:toolbox:1.0.0-SNAPSHOT'
+    implementation "org.jooq:jooq:${project.jooqVersion}"
+    implementation "org.jooq:jooq-meta:${project.jooqVersion}"
+    implementation "org.jooq:jooq-codegen:${project.jooqVersion}"
+    jooqCodegen("org.jooq:jooq-meta-extensions:${project.jooqVersion}")
 }
 
-license {
-    header = project.file('header.txt')
-
-    include 'com/almuradev/'
-    exclude 'com/almuradev/generated'
-
-    tasks {
-        main {
-            files = project.files('src/main/java')
-        }
-    }
-
-    newLine false
-}
+ext.internalBuild = '123'
+//version = "mc[${project.minecraftVersion}]-forge[${project.forgeBuild}]-sf[${project.spongeImplVersion.split("-")[2]}]-b${project.internalBuild}"
 
 idea {
     module {
         inheritOutputDirs = true
     }
-}
-
-if (JavaVersion.current().isJava8Compatible() || JavaVersion.current().isJava9Compatible()) {
-    tasks.withType(Javadoc) {
-        // disable the crazy super-strict doclint tool in Java 8
-        options.addStringOption('Xdoclint:none', '-quiet')
+    project {
+        settings {
+            runConfigurations {
+                "1. Run Client"(Gradle) {
+                    taskNames = ["runClient"]
+                }
+                "2. Run Server"(Gradle) {
+                    taskNames = ["runServer"]
+                }
+                "3. Run Obfuscated Client"(Gradle) {
+                    taskNames = ["runObfClient"]
+                }
+                "4. Run Obfuscated Server"(Gradle) {
+                    taskNames = ["runObfServer"]
+                }
+            }
+            compiler.javac {
+                afterEvaluate {
+                    javacAdditionalOptions = "-encoding utf8"
+                    moduleJavacAdditionalOptions = [
+                            (project.name + ".main"): tasks.compileJava.options.compilerArgs.collect { '"' + it + '"' }.join(' ')
+                    ]
+                }
+            }
+        }
     }
 }
 
-compileJava {
-    options.compilerArgs += [
-            '-Xlint:-processing',
-            '-Xlint:-deprecation',
-    ]
-    options.deprecation = true
-    options.encoding = 'utf8'
-}
 
 processResources {
     // So a new build number or Minecraft version reprocesses mcmod.info (Gradle otherwise sees nothing changed)
@@ -220,21 +152,25 @@ processResources {
     inputs.property 'minecraftVersion', project.minecraftVersion
     filesMatching('**/mcmod.info') {
         filter ReplaceTokens, tokens: [
-            'build': project.internalBuild,
-            'minecraftVersion': project.minecraftVersion
+                'build': project.internalBuild,
+                'minecraftVersion': project.minecraftVersion
         ]
     }
 }
 
-test {
-    testLogging {
-        exceptionFormat = 'full' // Always print full stack trace if something goes wrong in the unit tests
-        showStandardStreams = true
+
+cleanroom {
+    runs {
+        customClient{}
+        customServer{}
+    }
+    loader {
+        accessTransformers.from('src/main/resources/META-INF/accesstransformer.cfg')
     }
 }
 
 jar {
-    classifier 'base'
+//    classifier 'base'
     exclude 'log4j2-test.xml'
 
     manifest {
@@ -277,9 +213,9 @@ jar {
 }
 
 shadowJar {
-    mainSpec.sourcePaths.clear()
+    //mainSpec.sourcePaths.clear()
     dependsOn reobfJar
-    classifier ''
+//    classifier ''
     exclude 'dummyThing'
     relocate 'com.typesafe.config', 'configurate.typesafe.config'
 
@@ -313,7 +249,7 @@ shadowJar {
         //include dependency("com.griefdefender.lib.kyori:text-serializer-legacy-gd:3.0.4")
     }
     afterEvaluate {
-        from zipTree(reobfJar.jar)
+        //from zipTree()
     }
 }
 
@@ -330,114 +266,113 @@ sourceSets {
     }
 }
 
-task generateDatabaseClasses() {}
+tasks.register('generateDatabaseClasses') {}
 
-task cleanDatabaseClasses() {
+tasks.register('cleanDatabaseClasses') {
     doLast {
         project.file(generatedDir).deleteDir()
     }
 }
 
 jooq {
-    version = project.jooqVersion
-    edition = project.jooqEdition
-    axsDdl(sourceSets.main) {
-        generator {
-            database {
-                name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
-                properties {
-                    property {
-                        key = 'scripts'
-                        value = 'src/main/resources/db/axs/database.sql'
+    configuration {
+
+    }
+    executions {
+        //version = project.jooqVersion
+        //edition = project.jooqEdition
+        axs {
+            configuration {
+                generator {
+                    database {
+                        name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
+                        properties {
+                            property {
+                                key = 'scripts'
+                                value = 'src/main/resources/db/axs/database.sql'
+                            }
+                        }
+
+                        inputSchema = 'PUBLIC'
+                        outputSchemaToDefault = true
+                    }
+                    generate {
+                        relations = true
+                        deprecated = false
+                        records = true
+                        immutablePojos = false
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'com.almuradev.generated.axs'
+                        directory = generatedDir
                     }
                 }
 
-                inputSchema = 'PUBLIC'
-                outputSchemaToDefault = true
-            }
-            generate {
-                relations = true
-                deprecated = false
-                records = true
-                immutablePojos = false
-                fluentSetters = true
-            }
-            target {
-                packageName = 'com.almuradev.generated.axs'
-                directory = generatedDir
             }
         }
-    }
-    storeDdl(sourceSets.main) {
-        generator {
-            database {
-                name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
-                properties {
-                    property {
-                        key = 'scripts'
-                        value = 'src/main/resources/db/store/database.sql'
+        store {
+            configuration {
+                generator {
+                    database {
+                        name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
+                        properties {
+                            property {
+                                key = 'scripts'
+                                value = 'src/main/resources/db/store/database.sql'
+                            }
+                        }
+
+                        inputSchema = 'PUBLIC'
+                        outputSchemaToDefault = true
+                    }
+                    generate {
+                        relations = true
+                        deprecated = false
+                        records = true
+                        immutablePojos = false
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'com.almuradev.generated.store'
+                        directory = generatedDir
                     }
                 }
-
-                inputSchema = 'PUBLIC'
-                outputSchemaToDefault = true
-            }
-            generate {
-                relations = true
-                deprecated = false
-                records = true
-                immutablePojos = false
-                fluentSetters = true
-            }
-            target {
-                packageName = 'com.almuradev.generated.store'
-                directory = generatedDir
             }
         }
-    }
-    titleDdl(sourceSets.main) {
-        generator {
-            database {
-                name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
-                properties {
-                    property {
-                        key = 'scripts'
-                        value = 'src/main/resources/db/title/database.sql'
+        title {
+            configuration {
+                generator {
+                    database {
+                        name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
+                        properties {
+                            property {
+                                key = 'scripts'
+                                value = 'src/main/resources/db/title/database.sql'
+                            }
+                        }
+
+                        inputSchema = 'PUBLIC'
+                        outputSchemaToDefault = true
+                    }
+                    generate {
+                        relations = true
+                        deprecated = false
+                        records = true
+                        immutablePojos = false
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'com.almuradev.generated.title'
+                        directory = generatedDir
                     }
                 }
-
-                inputSchema = 'PUBLIC'
-                outputSchemaToDefault = true
-            }
-            generate {
-                relations = true
-                deprecated = false
-                records = true
-                immutablePojos = false
-                fluentSetters = true
-            }
-            target {
-                packageName = 'com.almuradev.generated.title'
-                directory = generatedDir
             }
         }
     }
 }
 
-generateDatabaseClasses.dependsOn 'generateAxsDdlJooqSchemaSource'
-
-generateAxsDdlJooqSchemaSource.dependsOn 'cleanDatabaseClasses'
-
-project.tasks.getByName('compileJava').dependsOn -= 'generateAxsDdlJooqSchemaSource'
-
-generateDatabaseClasses.dependsOn 'generateStoreDdlJooqSchemaSource'
-
-generateStoreDdlJooqSchemaSource.dependsOn 'cleanDatabaseClasses'
-
-project.tasks.getByName('compileJava').dependsOn -= 'generateStoreDdlJooqSchemaSource'
-
-generateDatabaseClasses.dependsOn 'generateTitleDdlJooqSchemaSource'
-
-generateTitleDdlJooqSchemaSource.dependsOn 'cleanDatabaseClasses'
-
-project.tasks.getByName('compileJava').dependsOn -= 'generateTitleDdlJooqSchemaSource'
+// TODO: fundamental Foundation issue
+tasks.withType(JavaExec).configureEach {
+    systemProperty 'foundation.loadsall', 'true'
+}

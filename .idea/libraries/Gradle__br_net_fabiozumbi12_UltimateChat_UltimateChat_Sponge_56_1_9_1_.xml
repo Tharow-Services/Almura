@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: br.net.fabiozumbi12.UltimateChat:UltimateChat-Sponge-56-1.9.1:" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="br.net.fabiozumbi12.UltimateChat" artifactId="UltimateChat-Sponge-56-1.9.1" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/UltimateChat-Sponge-56-1.9.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

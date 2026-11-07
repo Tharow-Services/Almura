@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: io.netty:netty-transport-classes-io_uring:4.2.16.Final" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="io.netty" artifactId="netty-transport-classes-io_uring" version="4.2.16.Final" baseVersion="4.2.16.Final" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-classes-io_uring/4.2.16.Final/d4788328f8a2145e26d6e80f2f3ddc2f73bc24a4/netty-transport-classes-io_uring-4.2.16.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-classes-io_uring/4.2.16.Final/9eae159d62e44bf9bb1c8e152b420203878ae8e8/netty-transport-classes-io_uring-4.2.16.Final-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-classes-io_uring/4.2.16.Final/9658cc0abaa9f69f88b75b107fcad6f2c5959bf/netty-transport-classes-io_uring-4.2.16.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

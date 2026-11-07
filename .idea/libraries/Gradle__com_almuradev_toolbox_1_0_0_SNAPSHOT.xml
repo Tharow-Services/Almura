@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.almuradev:toolbox:1.0.0-SNAPSHOT" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.almuradev" artifactId="toolbox" version="1.0.0-SNAPSHOT" baseVersion="1.0.0-SNAPSHOT" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.almuradev/toolbox/1.0.0-SNAPSHOT/8dc887b2858468206420ff38c2ccd907f8b8c44f/toolbox-1.0.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.almuradev/toolbox/1.0.0-SNAPSHOT/99602ea3264d994e62cc87ae781a483f709eb9d8/toolbox-1.0.0-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.almuradev/toolbox/1.0.0-SNAPSHOT/a84023f72c5f5f82b98354030668371dd91b3606/toolbox-1.0.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

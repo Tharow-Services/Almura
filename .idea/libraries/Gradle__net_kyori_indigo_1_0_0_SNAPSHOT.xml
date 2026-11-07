@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: net.kyori:indigo:1.0.0-SNAPSHOT" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.kyori" artifactId="indigo" version="1.0.0-SNAPSHOT" baseVersion="1.0.0-SNAPSHOT" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/indigo/1.0.0-SNAPSHOT/d6dd1ab725cbc5f50186b3c05fae8c4caad4f7d5/indigo-1.0.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/indigo/1.0.0-SNAPSHOT/bd6bc82d41fba4a4979412d3c222db8fdcc53771/indigo-1.0.0-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/indigo/1.0.0-SNAPSHOT/68601c269bd5b9e6a3803525292167dfa98cf8a/indigo-1.0.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

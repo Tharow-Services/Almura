@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: net.kyori:violet:1.1.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.kyori" artifactId="violet" version="1.1.0" baseVersion="1.1.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/violet/1.1.0/7d9925049f12c87026616a7815bd46aa2acdb76/violet-1.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/violet/1.1.0/480d0cfd1e815a073415abb515087f80be693fd4/violet-1.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kyori/violet/1.1.0/f9ff75732c30e3cc6999e8d463f77162ac906350/violet-1.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

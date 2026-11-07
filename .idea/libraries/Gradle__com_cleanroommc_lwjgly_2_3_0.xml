@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.cleanroommc:lwjgly:2.3.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.cleanroommc" artifactId="lwjgly" version="2.3.0" baseVersion="2.3.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.cleanroommc/lwjgly/2.3.0/97a74dba3748e4ec81ca6101abf7d55becb873df/lwjgly-2.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.cleanroommc/lwjgly/2.3.0/b7e57f1751fb3b1db7cb0e07dc3bbd83ef37fccb/lwjgly-2.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

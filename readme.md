@@ -1,5 +1,7 @@
-Almura
+Almura: Personal
 =============
+This is a mass modification of the Almura client for private use. 
+
 
 ## Prerequisites
 * [Java] 8
