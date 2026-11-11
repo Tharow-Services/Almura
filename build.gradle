@@ -6,7 +6,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'org.jooq.jooq-codegen-gradle' version '3.21.9'
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.4.1'
-    id 'org.spongepowered.gradle.plugin' version '2.5.0'
+    //id 'org.spongepowered.gradle.plugin' version '2.5.0'
     //id("org.spongepowered.plugin") version "0.9.0"
 }
 
@@ -73,13 +73,9 @@ repositories {
     }
 }
 
-tasks.register('runServer') {
-    overwrite = true
-    // your new configuration here
-}
 
 dependencies {
-    implementation cleanroom.userdev(cleanroom_version)
+    //implementation cleanroom.userdev(cleanroom_version)
     implementation 'net.kyori:indigo:1.0.0-SNAPSHOT'
     implementation 'net.kyori:lunar:1.0.5-SNAPSHOT'
     implementation 'net.kyori:membrane:1.0.5'
@@ -89,11 +85,13 @@ dependencies {
     implementation "net.kyori:event-api:3.0.0"
     implementation "net.kyori:event-api:5.0.0-SNAPSHOT"
     implementation "net.kyori:event-method:3.0.0"
-
+    implementation "org.spongepowered:spongeapi:7.5.0-SNAPSHOT"
+    //implementation "org.spongepowered:spongeforge:"
+//    implementaiion deobf("curse.maven:spongeforge-1279505:8530444")
     implementation 'io.github.nucleuspowered:nucleus-api:2.4.0'
     // Remember to update this entry for LuckPerms if the API gets behind the currently plugin version being used.
     implementation "net.luckperms:api:5.3"
-    compileOnly deobf('com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT')
+    compileOnly 'com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT'
     // Attempt to use GD 2.0.3 API change.
     implementation 'com.griefdefender:api:2.1.0-SNAPSHOT'
     // IndustrialCraft 2 energy API for machines. Optional at runtime: only used when IC2 is installed, so it's neither shaded nor required.
@@ -121,7 +119,7 @@ idea {
         settings {
             runConfigurations {
                 "1. Run Client"(Gradle) {
-                    taskNames = ["runClient"]
+                    taskNames = ["runCleanroomClient"]
                 }
                 "2. Run Server"(Gradle) {
                     taskNames = ["runServer"]
@@ -145,25 +143,8 @@ idea {
     }
 }
 
-
-processResources {
-    // So a new build number or Minecraft version reprocesses mcmod.info (Gradle otherwise sees nothing changed)
-    inputs.property 'internalBuild', project.internalBuild
-    inputs.property 'minecraftVersion', project.minecraftVersion
-    filesMatching('**/mcmod.info') {
-        filter ReplaceTokens, tokens: [
-                'build': project.internalBuild,
-                'minecraftVersion': project.minecraftVersion
-        ]
-    }
-}
-
-
 cleanroom {
-    runs {
-        customClient{}
-        customServer{}
-    }
+    mode 'loader'
     loader {
         accessTransformers.from('src/main/resources/META-INF/accesstransformer.cfg')
     }
@@ -214,7 +195,7 @@ jar {
 
 shadowJar {
     //mainSpec.sourcePaths.clear()
-    dependsOn reobfJar
+//    dependsOn reobfJar
 //    classifier ''
     exclude 'dummyThing'
     relocate 'com.typesafe.config', 'configurate.typesafe.config'

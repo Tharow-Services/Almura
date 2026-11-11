@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Almura.iml" filepath="$PROJECT_DIR$/.idea/modules/Almura.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Almura.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Almura.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Almura.minecraftPatchDev.iml" filepath="$PROJECT_DIR$/.idea/modules/Almura.minecraftPatchDev.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Almura.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Almura.test.iml" />
     </modules>
   </component>

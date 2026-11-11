@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: org.spongepowered:configurate-hocon:3.7.2" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.spongepowered" artifactId="configurate-hocon" version="3.7.2" baseVersion="3.7.2" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/configurate-hocon/3.7.2/a5e49f57ae8f5e61dbae48a158a28343e7d6f707/configurate-hocon-3.7.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/configurate-hocon/3.7.2/c5fb0b217ef3aad3eb8f20dbba89bea30cb721a9/configurate-hocon-3.7.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/configurate-hocon/3.7.2/b0fba33c426fb79fe0f3f952dd87d788662fdd77/configurate-hocon-3.7.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

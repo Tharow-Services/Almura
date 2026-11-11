@@ -2,9 +2,11 @@
   <library name="Gradle: com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT" type="java-imported" external-system-id="GRADLE">
     <properties groupId="com.almuradev" artifactId="malisiscore" version="1.12.2-6.6.0-SNAPSHOT" baseVersion="1.12.2-6.6.0-SNAPSHOT" />
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/9.8.2/transforms/d105b10f2536e896feec04088448ea7c/transformed/malisiscore-1.12.2-6.6.0-SNAPSHOT-deobf.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/almuradev/malisiscore/1.12.2-6.6.0-SNAPSHOT/malisiscore-1.12.2-6.6.0-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/almuradev/malisiscore/1.12.2-6.6.0-SNAPSHOT/malisiscore-1.12.2-6.6.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
