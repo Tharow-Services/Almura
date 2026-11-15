@@ -39,7 +39,7 @@ public abstract class MixinEntityPig extends EntityAnimal {
 
     /**
      * @author Dockter
-     * Purpose: overwrite the AT init method to customize the temptations list.
+     * @reason  overwrite the AT init method to customize the temptations list.
      */
     @Overwrite
     protected void initEntityAI() {
@@ -66,7 +66,7 @@ public abstract class MixinEntityPig extends EntityAnimal {
 
     /**
      * @author Dockter
-     * Purpose: overwrite the AT init method to customize the temptations list.
+     * @reason  overwrite the AT init method to customize the temptations list.
      */
     @Overwrite // Intended to bring compatibility to FarmingForBlockHeads.
     // Note: required to overwrite how EntityPig normally implements this.

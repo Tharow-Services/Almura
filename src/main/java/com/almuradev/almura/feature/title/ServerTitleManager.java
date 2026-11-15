@@ -21,6 +21,7 @@ import com.almuradev.almura.shared.util.SerializationUtil;
 import com.almuradev.almura.shared.network.NetworkConfig;
 import com.almuradev.core.event.Witness;
 import com.almuradev.generated.title.tables.records.TitleSelectRecord;
+import org.jooq.CloseableDSLContext;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Results;
@@ -129,7 +130,7 @@ public final class ServerTitleManager extends Witness.Impl implements Witness.Li
         this.scheduler.createTaskBuilder()
           .async()
           .execute(() -> {
-              try (final DSLContext context = this.databaseManager.createContext(true)) {
+              try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                   final TitleSelectRecord record = TitleQueries
                     .createFetchSelectedTitleFor(player.getUniqueId())
                     .build(context)
@@ -194,7 +195,7 @@ public final class ServerTitleManager extends Witness.Impl implements Witness.Li
         this.scheduler.createTaskBuilder()
           .async()
           .execute(() -> {
-              try (final DSLContext context = this.databaseManager.createContext(true)) {
+              try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                   final Results results = TitleQueries
                     .createFetchAllTitles()
                     .build(context)
@@ -321,7 +322,7 @@ public final class ServerTitleManager extends Witness.Impl implements Witness.Li
             this.scheduler.createTaskBuilder()
               .async()
               .execute(() -> {
-                    try (final DSLContext context = this.databaseManager.createContext(true)) {
+                    try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                         TitleQueries
                           .createDeleteSelectedTitleFor(player.getUniqueId())
                           .build(context)
@@ -365,7 +366,7 @@ public final class ServerTitleManager extends Witness.Impl implements Witness.Li
             this.scheduler.createTaskBuilder()
               .async()
               .execute(() -> {
-                    try (final DSLContext context = this.databaseManager.createContext(true)) {
+                    try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                         TitleQueries
                           .createDeleteSelectedTitleFor(player.getUniqueId())
                           .build(context)
@@ -399,7 +400,7 @@ public final class ServerTitleManager extends Witness.Impl implements Witness.Li
                   .createTaskBuilder()
                   .async()
                   .execute(() -> {
-                      try (final DSLContext context = this.databaseManager.createContext(true)) {
+                      try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                           if (previousTitle != null) {
                               TitleQueries
                                 .createDeleteSelectedTitleFor(player.getUniqueId())
@@ -463,7 +464,7 @@ public final class ServerTitleManager extends Witness.Impl implements Witness.Li
               .createTaskBuilder()
               .async()
               .execute(() -> {
-                  try (final DSLContext context = this.databaseManager.createContext(true)) {
+                  try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                       final int result = TitleQueries
                         .createInsertTitle(player.getUniqueId(), id, permission, content, isHidden)
                         .build(context)
@@ -527,7 +528,7 @@ public final class ServerTitleManager extends Witness.Impl implements Witness.Li
             this.scheduler.createTaskBuilder()
               .async()
               .execute(() -> {
-                  try (final DSLContext context = this.databaseManager.createContext(true)) {
+                  try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                       final int result = TitleQueries
                         .createUpdateTitle(id, permission, content, isHidden)
                         .build(context)
@@ -581,7 +582,7 @@ public final class ServerTitleManager extends Witness.Impl implements Witness.Li
               .createTaskBuilder()
               .async()
               .execute(() -> {
-                  try (final DSLContext context = this.databaseManager.createContext(true)) {
+                  try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                       final int result = TitleQueries
                         .createDeleteTitle(id)
                         .build(context)

@@ -40,34 +40,34 @@ public class ItemReturnHelper implements Witness {
     public void lootLoad(LootTableLoadEvent lootTableEvent) {
         if (lootTableEvent.getName().toString().equals("minecraft:entities/chicken")) {
             if (!GameRegistry.makeItemStack("almura:normal/ingredient/chickenleg_raw", 0, 1, null).isEmpty()) {
-                LootEntry chicken_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/chickenleg_raw", 0, 1, null).item, 100, 1, new LootFunction[0], new LootCondition[0], "chickenleg_raw");
+                LootEntry chicken_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/chickenleg_raw", 0, 1, null).getItem(), 100, 1, new LootFunction[0], new LootCondition[0], "chickenleg_raw");
                 LootPool chicken_pool = new LootPool(new LootEntry[]{chicken_entry}, new LootCondition[0], new RandomValueRange(2), new RandomValueRange(0, 1), "chicken_table");
                 lootTableEvent.getTable().addPool(chicken_pool);
             }
         }
         if (lootTableEvent.getName().toString().equals("minecraft:entities/cow")) {
             if (!GameRegistry.makeItemStack("almura:normal/ingredient/roastbeef_raw", 0, 1, null).isEmpty()) {
-                LootEntry cow_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/roastbeef_raw", 0, 1, null).item, 100, 1, new LootFunction[0], new LootCondition[0], "roastbeef_raw");
+                LootEntry cow_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/roastbeef_raw", 0, 1, null).getItem(), 100, 1, new LootFunction[0], new LootCondition[0], "roastbeef_raw");
                 LootPool cow_pool = new LootPool(new LootEntry[]{cow_entry}, new LootCondition[0], new RandomValueRange(2), new RandomValueRange(0, 1), "cow_table");
                 lootTableEvent.getTable().addPool(cow_pool);
             }
         }
         if (lootTableEvent.getName().toString().equals("minecraft:entities/pig")) {
             if (!GameRegistry.makeItemStack("almura:normal/ingredient/porkbelly_raw", 0, 1, null).isEmpty()) {
-                LootEntry pig0_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/porkbelly_raw", 0, 1, null).item, 100, 1, new LootFunction[0], new LootCondition[0], "porkbelly_raw");
+                LootEntry pig0_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/porkbelly_raw", 0, 1, null).getItem(), 100, 1, new LootFunction[0], new LootCondition[0], "porkbelly_raw");
                 LootPool pig0_pool = new LootPool(new LootEntry[]{pig0_entry}, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(0, 1), "pig_table0");
                 lootTableEvent.getTable().addPool(pig0_pool);
             }
 
             if (!GameRegistry.makeItemStack("almura:normal/ingredient/hamshank", 0, 1, null).isEmpty()) {
-                LootEntry pig1_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/hamshank", 0, 1, null).item, 100, 1, new LootFunction[0], new LootCondition[0], "hamshank");
+                LootEntry pig1_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/hamshank", 0, 1, null).getItem(), 100, 1, new LootFunction[0], new LootCondition[0], "hamshank");
                 LootPool pig1_pool = new LootPool(new LootEntry[]{pig1_entry}, new LootCondition[0], new RandomValueRange(2), new RandomValueRange(0, 1), "pig_table1");
                 lootTableEvent.getTable().addPool(pig1_pool);
             }
         }
         if (lootTableEvent.getName().toString().equals("minecraft:entities/sheep")) {
             if (!GameRegistry.makeItemStack("almura:normal/ingredient/lambchop_raw", 0, 1, null).isEmpty()) {
-                LootEntry sheep_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/lambchop_raw", 0, 1, null).item, 100, 1, new LootFunction[0], new LootCondition[0], "lambchop_raw");
+                LootEntry sheep_entry = new LootEntryItem(GameRegistry.makeItemStack("almura:normal/ingredient/lambchop_raw", 0, 1, null).getItem(), 100, 1, new LootFunction[0], new LootCondition[0], "lambchop_raw");
                 LootPool sheep_pool = new LootPool(new LootEntry[]{sheep_entry}, new LootCondition[0], new RandomValueRange(2), new RandomValueRange(0, 1), "sheep_table");
                 lootTableEvent.getTable().addPool(sheep_pool);
             }

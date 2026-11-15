@@ -41,6 +41,7 @@ public abstract class MixinEntityAnimal extends EntityAgeable implements IAnimal
 
     /**
      * @author Dockter
+     * @reason isCustomBreedingItem
      */
     @Overwrite
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
@@ -68,6 +69,7 @@ public abstract class MixinEntityAnimal extends EntityAgeable implements IAnimal
 
     /**
      * @author Dockter
+     * @reason isCustomBreedingItem
      */
     @Overwrite
     // Notes:

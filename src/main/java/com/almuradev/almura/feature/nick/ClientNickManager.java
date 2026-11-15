@@ -14,8 +14,6 @@ import com.almuradev.almura.feature.nick.network.ServerboundNicknameOpenRequestP
 import com.almuradev.almura.feature.nick.network.ServerboundNucleusNameChangePacket;
 import com.almuradev.almura.shared.network.NetworkConfig;
 import com.almuradev.core.event.Witness;
-import com.google.common.eventbus.Subscribe;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -57,7 +55,7 @@ public final class ClientNickManager implements Witness {
         if (event.getWorld().isRemote && event.getEntity() instanceof EntityPlayer) {
             final Text nick = this.getNicknameFor(event.getEntity().getUniqueID());
             if (nick != null) {
-                ((IMixinEntityPlayer) event.getEntity()).setDisplayName(TextSerializers.LEGACY_FORMATTING_CODE.serialize(nick));
+                ((IMixinEntityPlayer) event.getEntity()).almura$setDisplayName(TextSerializers.LEGACY_FORMATTING_CODE.serialize(nick));
             }
         }
     }
@@ -81,7 +79,7 @@ public final class ClientNickManager implements Witness {
     }
 
     public void setForgeNickname(final EntityPlayer player, final String nick) {
-        ((IMixinEntityPlayer) player).setDisplayName(nick);
+        ((IMixinEntityPlayer) player).almura$setDisplayName(nick);
     }
 
     public void requestNicknameGUI() {

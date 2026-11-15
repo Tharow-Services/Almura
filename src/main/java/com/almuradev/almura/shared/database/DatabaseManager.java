@@ -8,9 +8,12 @@
 package com.almuradev.almura.shared.database;
 
 import com.google.inject.Singleton;
+import org.jooq.CloseableDSLContext;
 import org.jooq.DSLContext;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DataSourceConnectionProvider;
+import org.jooq.impl.DefaultCloseableDSLContext;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
@@ -106,10 +109,10 @@ public final class DatabaseManager {
         return includeSchema ? this.dataSource : this.connectionSource;
     }
 
-    public DSLContext createContext(final boolean includeSchema) throws SQLException {
+    public CloseableDSLContext createContext(final boolean includeSchema) throws SQLException {
         final DataSource dataSource = this.getOrCreateDataSource(includeSchema);
 
-        return DSL.using(dataSource, this.configuration.getDialect(), new Settings().withRenderSchema(false).withRenderCatalog(false));
+        return new DefaultCloseableDSLContext(new DataSourceConnectionProvider(dataSource), this.configuration.getDialect(), new Settings().withRenderSchema(false).withRenderCatalog(false));
     }
 
     public DatabaseConfiguration getConfiguration() {

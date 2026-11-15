@@ -35,7 +35,6 @@ import net.malisis.core.client.gui.component.interaction.button.builder.UIButton
 import net.malisis.core.renderer.font.FontOptions;
 import net.malisis.core.util.FontColors;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
@@ -319,11 +318,11 @@ public final class NicknameGUI extends BasicScreen {
     }
 
     private void setRendererName(EntityPlayer player, String name) {
-        ((IMixinEntityPlayer) player).setDisplayName(name);
+        ((IMixinEntityPlayer) player).almura$setDisplayName(name);
     }
 
     @Override
-    protected void keyTyped(char keyChar, int keyCode) {
+    protected void keyTyped(char keyChar, int keyCode) throws IOException {
         super.keyTyped(keyChar, keyCode);
         this.lastUpdate = 0; // Reset the timer when key is typed.
     }

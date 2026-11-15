@@ -19,6 +19,7 @@ import com.almuradev.almura.shared.util.SerializationUtil;
 import com.almuradev.core.event.Witness;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import org.jooq.CloseableDSLContext;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.slf4j.Logger;
@@ -481,7 +482,7 @@ public final class ServerBankManager extends Witness.Impl implements Witness.Lif
 
     private void fetchHistory(final Function<DSLContext, List<Record>> query, final Consumer<List<BankHistoryEntry>> then) {
         this.scheduler.createTaskBuilder().async().execute(() -> {
-            try (final DSLContext context = this.databaseManager.createContext(true)) {
+            try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                 final List<Record> records = query.apply(context);
                 // Names are looked up on the main thread
                 this.scheduler.createTaskBuilder().execute(() -> then.accept(records.stream()
@@ -548,7 +549,7 @@ public final class ServerBankManager extends Witness.Impl implements Witness.Lif
 
     private void reloadAccounts(final Runnable then) {
         this.scheduler.createTaskBuilder().async().execute(() -> {
-            try (final DSLContext context = this.databaseManager.createContext(true)) {
+            try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                 final Map<Integer, Map<UUID, Boolean>> members = new HashMap<>();
                 for (final Record record : BankQueries.fetchMembers(context)) {
                     members.computeIfAbsent(record.get(BankQueries.MEMBER_ACCOUNT), key -> new LinkedHashMap<>())
@@ -578,7 +579,7 @@ public final class ServerBankManager extends Witness.Impl implements Witness.Lif
      */
     private void database(final Consumer<DSLContext> change, final Runnable then) {
         this.scheduler.createTaskBuilder().async().execute(() -> {
-            try (final DSLContext context = this.databaseManager.createContext(true)) {
+            try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                 change.accept(context);
                 this.scheduler.createTaskBuilder().execute(then).submit(this.container);
             } catch (final Exception e) {
@@ -593,7 +594,7 @@ public final class ServerBankManager extends Witness.Impl implements Witness.Lif
         final UUID owner = account.getOwner();
         final UUID actorId = actor.getUniqueId();
         this.scheduler.createTaskBuilder().async().execute(() -> {
-            try (final DSLContext context = this.databaseManager.createContext(true)) {
+            try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                 BankQueries.insertTransaction(context, recNo, name, owner, actorId, type, amount);
             } catch (final Exception e) {
                 this.logger.error("Could not record bank transaction {} of {} on account {} by {}.", type, amount, recNo, actorId, e);

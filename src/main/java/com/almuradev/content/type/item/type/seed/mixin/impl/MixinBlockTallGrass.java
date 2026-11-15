@@ -7,6 +7,7 @@
  */
 package com.almuradev.content.type.item.type.seed.mixin.impl;
 
+import com.almuradev.almura.asm.mixin.accessors.world.ChunkCacheAccessor;
 import com.almuradev.content.type.block.mixin.impl.MixinBlock;
 import com.almuradev.content.type.item.type.seed.SeedItem;
 import com.almuradev.content.util.DoubleRanges;
@@ -46,7 +47,7 @@ public abstract class MixinBlockTallGrass extends MixinBlock {
         World world;
 
         if (access instanceof ChunkCache) {
-            world = ((ChunkCache) access).world;
+            world = ((ChunkCacheAccessor) access).accessor$getWorld();
         } else if (access instanceof World) {
             world = (World) access;
         } else {

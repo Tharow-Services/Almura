@@ -2,8 +2,9 @@ import org.jetbrains.gradle.ext.Gradle
 
 plugins {
     id 'java'
+    id 'idea'
     id 'com.cleanroommc.cleanroomgradle'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.gradleup.shadow' version '9.6.1'
     id 'org.jooq.jooq-codegen-gradle' version '3.21.9'
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.4.1'
     //id 'org.spongepowered.gradle.plugin' version '2.5.0'
@@ -17,9 +18,6 @@ base {
 repositories {
     mavenLocal()
     mavenCentral()
-    flatDir {
-        dirs "lib"
-    }
     // Any maven repo offline can cause the buildscript to fail during AT Extraction!
     maven {
         name = 'forge'
@@ -28,6 +26,10 @@ repositories {
     maven {
         name = 'oss-sonatype-public'
         url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        name = 'centeral Snapshot'
+        url = ' https://central.sonatype.com/repository/maven-snapshots/'
     }
     maven {
         name 'drnaylor-minecraft'
@@ -60,6 +62,14 @@ repositories {
         name = 'ic2'
         url = 'https://maven.ic2.player.to/'
     }
+    maven {
+        name = "Tharow Services"
+        url 'https://t-0.cc/maven/'
+    }
+    maven {
+        name = "Mojang"
+        url = uri("https://libraries.minecraft.net/")
+    }
     exclusiveContent {
         forRepository {
             maven {
@@ -75,6 +85,10 @@ repositories {
 
 
 dependencies {
+    //noinspection DependencyNotationArgument
+    implementation cleanroom.userdev(cleanroom_version) {
+        accessTransformers.from('src/main/resources/META-INF/almura_at.cfg') // Optional
+    }
     //implementation cleanroom.userdev(cleanroom_version)
     implementation 'net.kyori:indigo:1.0.0-SNAPSHOT'
     implementation 'net.kyori:lunar:1.0.5-SNAPSHOT'
@@ -86,6 +100,7 @@ dependencies {
     implementation "net.kyori:event-api:5.0.0-SNAPSHOT"
     implementation "net.kyori:event-method:3.0.0"
     implementation "org.spongepowered:spongeapi:7.5.0-SNAPSHOT"
+    implementation "org.spongepowered:spongecommon:1.12.2-7.4.7:dev"
     //implementation "org.spongepowered:spongeforge:"
 //    implementaiion deobf("curse.maven:spongeforge-1279505:8530444")
     implementation 'io.github.nucleuspowered:nucleus-api:2.4.0'
@@ -99,7 +114,8 @@ dependencies {
     implementation "net.kyori:adventure-api:4.9.3"
     // UltimateChat is a server plugin: compile against it, but don't load it in the dev client (its startup fails without a server).
     // Almura only uses it when the plugin is installed (see UchatUtil).
-    implementation 'br.net.fabiozumbi12.UltimateChat:UltimateChat-Sponge-56-1.9.1'
+    implementation 'org.inspirenxe:skills:1.0.0-SNAPSHOT:api'
+    implementation 'br.net.fabiozumbi12.UltimateChat:UltimateChat-Sponge-56:1.9.1' //1.9.4-SNAPSHOT
     implementation 'org.spongepowered:configurate-gson:3.7.3'
     implementation 'com.almuradev:toolbox:1.0.0-SNAPSHOT'
     implementation "org.jooq:jooq:${project.jooqVersion}"
@@ -109,7 +125,7 @@ dependencies {
 }
 
 ext.internalBuild = '123'
-//version = "mc[${project.minecraftVersion}]-forge[${project.forgeBuild}]-sf[${project.spongeImplVersion.split("-")[2]}]-b${project.internalBuild}"
+version = "mc[${project.minecraftVersion}]-forge[${project.forgeBuild}]-sf[${project.spongeImplVersion.split("-")[2]}]-b${project.internalBuild}"
 
 idea {
     module {
@@ -117,20 +133,6 @@ idea {
     }
     project {
         settings {
-            runConfigurations {
-                "1. Run Client"(Gradle) {
-                    taskNames = ["runCleanroomClient"]
-                }
-                "2. Run Server"(Gradle) {
-                    taskNames = ["runServer"]
-                }
-                "3. Run Obfuscated Client"(Gradle) {
-                    taskNames = ["runObfClient"]
-                }
-                "4. Run Obfuscated Server"(Gradle) {
-                    taskNames = ["runObfServer"]
-                }
-            }
             compiler.javac {
                 afterEvaluate {
                     javacAdditionalOptions = "-encoding utf8"
@@ -144,9 +146,13 @@ idea {
 }
 
 cleanroom {
-    mode 'loader'
+    caches {
+        discardIntermediates = true
+    }
+    //mode 'loader'
     loader {
         accessTransformers.from('src/main/resources/META-INF/accesstransformer.cfg')
+        intermediateRuns = true
     }
 }
 
@@ -247,18 +253,10 @@ sourceSets {
     }
 }
 
-tasks.register('generateDatabaseClasses') {}
 
-tasks.register('cleanDatabaseClasses') {
-    doLast {
-        project.file(generatedDir).deleteDir()
-    }
-}
 
 jooq {
-    configuration {
-
-    }
+    //noinspection GroovyAssignabilityCheck
     executions {
         //version = project.jooqVersion
         //edition = project.jooqEdition
@@ -268,21 +266,24 @@ jooq {
                     database {
                         name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
                         properties {
+                            //noinspection GroovyAssignabilityCheck
                             property {
                                 key = 'scripts'
                                 value = 'src/main/resources/db/axs/database.sql'
                             }
                         }
-
+                        forceIntegerTypesOnZeroScaleDecimals = false
                         inputSchema = 'PUBLIC'
                         outputSchemaToDefault = true
                     }
+
                     generate {
                         relations = true
                         deprecated = false
                         records = true
                         immutablePojos = false
                         fluentSetters = true
+                        javaTimeTypes = false
                     }
                     target {
                         packageName = 'com.almuradev.generated.axs'
@@ -298,12 +299,13 @@ jooq {
                     database {
                         name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
                         properties {
+                            //noinspection GroovyAssignabilityCheck
                             property {
                                 key = 'scripts'
                                 value = 'src/main/resources/db/store/database.sql'
                             }
                         }
-
+                        forceIntegerTypesOnZeroScaleDecimals = false
                         inputSchema = 'PUBLIC'
                         outputSchemaToDefault = true
                     }
@@ -313,6 +315,7 @@ jooq {
                         records = true
                         immutablePojos = false
                         fluentSetters = true
+                        javaTimeTypes = false
                     }
                     target {
                         packageName = 'com.almuradev.generated.store'
@@ -327,12 +330,13 @@ jooq {
                     database {
                         name = 'org.jooq.meta.extensions.ddl.DDLDatabase'
                         properties {
+                            //noinspection GroovyAssignabilityCheck
                             property {
                                 key = 'scripts'
                                 value = 'src/main/resources/db/title/database.sql'
                             }
                         }
-
+                        forceIntegerTypesOnZeroScaleDecimals = false
                         inputSchema = 'PUBLIC'
                         outputSchemaToDefault = true
                     }
@@ -342,6 +346,7 @@ jooq {
                         records = true
                         immutablePojos = false
                         fluentSetters = true
+                        javaTimeTypes = false
                     }
                     target {
                         packageName = 'com.almuradev.generated.title'
@@ -351,6 +356,29 @@ jooq {
             }
         }
     }
+}
+
+tasks.register('generateDatabaseClasses') {
+    dependsOn = [
+        tasks.named('jooqCodegenAxs'),
+        tasks.named('jooqCodegenStore'),
+        tasks.named('jooqCodegenTitle'),
+    ]
+}
+
+
+
+tasks.register('cleanDatabaseClasses') {
+    doLast {
+        project.file(generatedDir).deleteDir()
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn('generateDatabaseClasses')
+}
+tasks.named('clean') {
+    dependsOn('cleanDatabaseClasses')
 }
 
 // TODO: fundamental Foundation issue

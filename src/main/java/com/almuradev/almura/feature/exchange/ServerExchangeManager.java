@@ -43,10 +43,8 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import org.jooq.DSLContext;
+import org.jooq.*;
 import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.Results;
 import org.slf4j.Logger;
 import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
@@ -75,6 +73,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.*;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -143,7 +142,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
 
         final Map<String, Exchange> exchanges = new HashMap<>();
 
-        try (final DSLContext context = this.databaseManager.createContext(true)) {
+        try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
             final Results results = ExchangeQueries
                 .createFetchAllExchanges()
                 .build(context)
@@ -181,7 +180,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
                     this.exchanges.put("almura.exchange.global", exchange);
 
                     // Yes, I am purposely running this sync
-                    try (final DSLContext context1 = this.databaseManager.createContext(true)) {
+                    try (final CloseableDSLContext context1 = this.databaseManager.createContext(true)) {
                         ExchangeQueries
                             .createInsertExchange(exchange.getCreated(), exchange.getCreator(), exchange.getId(), exchange.getName(),
                                 exchange.getPermission(), exchange.isHidden())
@@ -324,7 +323,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final Instant created = Instant.now();
 
                     final int result = ExchangeQueries
@@ -382,7 +381,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final int result = ExchangeQueries
                         .createUpdateExchange(id, name, permission, isHidden)
                         .build(context)
@@ -424,7 +423,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final int result = ExchangeQueries
                         .createDeleteExchange(id)
                         .build(context)
@@ -456,7 +455,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
 
         final List<ListItem> items = new ArrayList<>();
 
-        try (final DSLContext context = this.databaseManager.createContext(true)) {
+        try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
             final Results results = ExchangeQueries
                 .createFetchListItemsAndDataFor(axs.getId(), false)
                 .build(context)
@@ -630,7 +629,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
 
                     final Iterator<VanillaStack> listingIter = toListingStacks.iterator();
 
@@ -836,7 +835,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .flatMap(List::stream)
             .collect(Collectors.toList());
 
-        try (final DSLContext context = this.databaseManager.createContext(true)) {
+        try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
             final Results results = ExchangeQueries
                 .createFetchForSaleItemsFor(axs.getId(), false)
                 .build(context)
@@ -965,7 +964,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final Instant created = Instant.now();
 
                     final AxsForSaleItemRecord record = ExchangeQueries
@@ -1057,7 +1056,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final int result = ExchangeQueries
                         .createUpdateForSaleItemPrice(forSaleItem.getRecord(), price)
                         .build(context)
@@ -1157,7 +1156,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
                 .createTaskBuilder()
                 .async()
                 .execute(() -> {
-                    try (final DSLContext context = this.databaseManager.createContext(true)) {
+                    try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                         final int result = ExchangeQueries
                                 .createUpdateForSaleItemIsHidden(forSaleItem.getRecord(), true)
                                 .build(context)
@@ -1263,7 +1262,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final int result = ExchangeQueries
                         .createUpdateForSaleItemIsHidden(forSaleItem.getRecord(), true)
                         .build(context)
@@ -1357,7 +1356,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final int result = ExchangeQueries
                         .createUpdateForSaleItemPrice(forSaleItem.getRecord(), price)
                         .build(context)
@@ -1525,7 +1524,7 @@ public final class ServerExchangeManager extends Witness.Impl implements Witness
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
 
                     // Update listed quantity
                     int result = ExchangeQueries

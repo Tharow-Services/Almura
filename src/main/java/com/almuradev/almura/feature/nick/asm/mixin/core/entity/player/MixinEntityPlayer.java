@@ -17,7 +17,7 @@ public abstract class MixinEntityPlayer implements IMixinEntityPlayer {
     @Shadow private String displayname;
 
     @Override
-    public void setDisplayName(String displayName) {
+    public void almura$setDisplayName(String displayName) {
         this.displayname = displayName;
     }
 }

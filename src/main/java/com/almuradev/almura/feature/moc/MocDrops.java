@@ -53,7 +53,7 @@ public class MocDrops implements Witness {
             minimum = 4;
 
             for (EntityItem item : event.getDrops()) {
-                if (item.getItem().item.getRegistryName().toString().equalsIgnoreCase("mocreatures:turkeyraw")) {
+                if (item.getItem().getItem().getRegistryName().toString().equalsIgnoreCase("mocreatures:turkeyraw")) {
                     quantityFound++;
                 }
             }
@@ -69,7 +69,7 @@ public class MocDrops implements Witness {
             minimum = 2;
 
             for (EntityItem item : event.getDrops()) {
-                if (item.getItem().item.getRegistryName().toString().equalsIgnoreCase("minecraft:porkchop")) {
+                if (item.getItem().getItem().getRegistryName().toString().equalsIgnoreCase("minecraft:porkchop")) {
                     quantityFound++;
                 }
             }

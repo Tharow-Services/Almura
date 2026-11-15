@@ -38,6 +38,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import javax.inject.Inject;
+import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
 public final class FeatureScreen extends BasicScreen {
@@ -220,7 +221,7 @@ public final class FeatureScreen extends BasicScreen {
   }
 
   @Override
-  protected void keyTyped(char keyChar, int keyCode) {
+  protected void keyTyped(char keyChar, int keyCode) throws IOException {
     super.keyTyped(keyChar, keyCode);
     this.lastUpdate = 0; // Reset the timer when key is typed.
   }

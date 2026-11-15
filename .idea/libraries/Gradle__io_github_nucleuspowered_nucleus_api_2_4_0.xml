@@ -2,7 +2,7 @@
   <library name="Gradle: io.github.nucleuspowered:nucleus-api:2.4.0" type="java-imported" external-system-id="GRADLE">
     <properties groupId="io.github.nucleuspowered" artifactId="nucleus-api" version="2.4.0" baseVersion="2.4.0" />
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/nucleus-api-2.4.0.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.nucleuspowered/nucleus-api/2.4.0/4e95a3f2c9e5d486d9ab6aa23a19f389cb48d2d5/nucleus-api-2.4.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

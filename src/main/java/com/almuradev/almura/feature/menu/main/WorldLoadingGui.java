@@ -21,6 +21,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
+import java.io.IOException;
+
 /**
  * Replaces vanilla's "Downloading terrain" screen while joining a world or changing dimension (single player or a server), and the bare
  * progress screen single player shows while logging in to its own server; styled like {@link ConnectingGui}. Vanilla closes it (by opening no
@@ -62,7 +64,7 @@ public final class WorldLoadingGui extends BasicScreen {
     }
 
     @Override
-    protected void keyTyped(final char keyChar, final int keyCode) {
+    protected void keyTyped(final char keyChar, final int keyCode) throws IOException {
         // Like vanilla's terrain screen, this can't be closed: the world is still loading
         if (keyCode == Keyboard.KEY_ESCAPE) {
             return;

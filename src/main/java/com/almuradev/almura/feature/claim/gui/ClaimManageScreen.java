@@ -39,6 +39,7 @@ import org.spongepowered.api.network.ChannelBinding;
 import org.spongepowered.api.network.ChannelId;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.EnumMap;
@@ -620,7 +621,7 @@ public final class ClaimManageScreen extends BasicScreen {
     }
 
     @Override
-    protected void keyTyped(char keyChar, int keyCode) {
+    protected void keyTyped(char keyChar, int keyCode) throws IOException {
         if (keyCode == Keyboard.KEY_TAB) {
             if (this.claimNameField.isFocused()) {
                 this.claimNameField.setFocused(false);

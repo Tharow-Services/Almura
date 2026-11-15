@@ -583,7 +583,7 @@ public final class ManageTitlesGUI extends BasicScreen {
     }
 
     @Override
-    protected void keyTyped(char keyChar, int keyCode) {
+    protected void keyTyped(char keyChar, int keyCode) throws IOException {
         if (keyCode == Keyboard.KEY_TAB) {
             if (this.idField.isFocused()) {
                 this.idField.setFocused(false);

@@ -106,5 +106,15 @@
       <option name="name" value="CurseMaven" />
       <option name="url" value="https://curse.cleanroommc.com" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="Tharow Services" />
+      <option name="name" value="Tharow Services" />
+      <option name="url" value="https://t-0.cc/maven/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="centeral Snapshot" />
+      <option name="name" value="centeral Snapshot" />
+      <option name="url" value="file:$PROJECT_DIR$/%20https:/central.sonatype.com/repository/maven-snapshots" />
+    </remote-repository>
   </component>
 </project>

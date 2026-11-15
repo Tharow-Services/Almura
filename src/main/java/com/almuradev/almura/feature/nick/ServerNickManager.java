@@ -23,7 +23,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.entity.MoveEntityEvent;
@@ -172,7 +171,7 @@ public final class ServerNickManager extends Witness.Impl implements Witness.Lif
     }
 
     public void setForgeNickname(final EntityPlayer player, final String nick) {
-        ((IMixinEntityPlayer) player).setDisplayName(nick);
+        ((IMixinEntityPlayer) player).almura$setDisplayName(nick);
     }
 
     public String getNickname(final Player player) {

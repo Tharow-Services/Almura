@@ -38,8 +38,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import static org.spongepowered.mod.SpongeMod.side;
-
 public final class SeedItemImpl extends ItemSeeds implements SeedItem {
     private final ItemTooltip tooltip = new ItemTooltip.Impl(this);
     private final Delegate<BlockType> cropDelegate;

@@ -17,6 +17,7 @@ import com.almuradev.generated.axs.tables.records.*;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import org.jooq.*;
+import org.jooq.Record;
 
 import java.io.IOException;
 import java.math.BigDecimal;

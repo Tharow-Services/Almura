@@ -10,6 +10,7 @@ package com.almuradev.almura.shared.database;
 import com.almuradev.almura.Almura;
 import com.almuradev.core.event.Witness;
 import com.google.common.base.Charsets;
+import org.jooq.CloseableDSLContext;
 import org.jooq.DSLContext;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
@@ -36,13 +37,13 @@ public final class DatabaseInstaller implements Witness {
 
     @Listener(order = Order.FIRST)
     public void onGameStartingServer(final GameStartingServerEvent event) {
-        try (final DSLContext context = this.manager.createContext(false)) {
+        try (final CloseableDSLContext context = this.manager.createContext(false)) {
             context.createSchemaIfNotExists(this.manager.getConfiguration().getDatabase()).execute();
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
 
-        try (final DSLContext context = this.manager.createContext(true)) {
+        try (final CloseableDSLContext context = this.manager.createContext(true)) {
             this.setupTablesForFeature(context, "axs");
             this.setupTablesForFeature(context, "store");
             this.setupTablesForFeature(context, "title");

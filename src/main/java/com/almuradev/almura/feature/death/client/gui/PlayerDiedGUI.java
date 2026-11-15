@@ -47,6 +47,7 @@ import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.scheduler.Task;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.function.Consumer;
@@ -232,7 +233,7 @@ public final class PlayerDiedGUI extends BasicScreen {
     }
 
     @Override
-    protected void keyTyped(char keyChar, int keyCode) {
+    protected void keyTyped(char keyChar, int keyCode) throws IOException {
         if (keyCode == Keyboard.KEY_ESCAPE) {
             if (this.player.isDead) {
                 return;

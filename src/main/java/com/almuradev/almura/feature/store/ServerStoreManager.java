@@ -53,11 +53,8 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import org.jooq.DSLContext;
-import org.jooq.Query;
+import org.jooq.*;
 import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.Results;
 import org.slf4j.Logger;
 import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
@@ -159,7 +156,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
 
         final Map<String, Store> stores = new HashMap<>();
 
-        try (final DSLContext context = this.databaseManager.createContext(true)) {
+        try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
             final Results results = StoreQueries
                 .createFetchAllStores()
                 .build(context)
@@ -198,7 +195,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
                     this.stores.put("almura.store.test", store);
 
                     // Yes, I am purposely running this sync
-                    try (final DSLContext context1 = this.databaseManager.createContext(true)) {
+                    try (final CloseableDSLContext context1 = this.databaseManager.createContext(true)) {
                         StoreQueries
                             .createInsertStore(store.getCreated(), store.getCreator(), store.getId(), store.getName(),
                                 store.getPermission(), store.isHidden())
@@ -325,7 +322,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final Instant created = Instant.now();
 
                     final int result = StoreQueries
@@ -383,7 +380,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final int result = StoreQueries
                         .createUpdateStore(id, name, permission, isHidden)
                         .build(context)
@@ -425,7 +422,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final int result = StoreQueries
                         .createDeleteStore(id)
                         .build(context)
@@ -456,7 +453,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
 
         final List<SellingItem> items = new ArrayList<>();
 
-        try (final DSLContext context = this.databaseManager.createContext(true)) {
+        try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
             final Results results = StoreQueries
                 .createFetchSellingItemsAndDataFor(store.getId(), false)
                 .build(context)
@@ -502,7 +499,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
 
                     final Map<StoreSellingItemRecord, VanillaStack> inserted = new HashMap<>();
 
@@ -634,7 +631,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final List<Query> toUpdate = new ArrayList<>();
 
                     for (final ServerboundModifyItemsPacket.ModifyCandidate candidate : copyCandidates) {
@@ -721,7 +718,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final List<Query> toUpdate = new ArrayList<>();
 
                     for (final Integer recNo : recNos) {
@@ -813,7 +810,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
 
         final List<BuyingItem> items = new ArrayList<>();
 
-        try (final DSLContext context = this.databaseManager.createContext(true)) {
+        try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
             final Results results = StoreQueries
                 .createFetchBuyingItemsAndDataFor(store.getId(), false)
                 .build(context)
@@ -859,7 +856,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
 
                     final Map<StoreBuyingItemRecord, VanillaStack> inserted = new HashMap<>();
 
@@ -991,7 +988,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final List<Query> toUpdate = new ArrayList<>();
 
                     for (final ServerboundModifyItemsPacket.ModifyCandidate candidate : copyCandidates) {
@@ -1124,7 +1121,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     final List<Query> toUpdate = new ArrayList<>();
 
                     for (final Integer recNo : recNos) {
@@ -1269,7 +1266,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     int result;
 
                     if (!infinite) {
@@ -1433,7 +1430,7 @@ public final class ServerStoreManager extends Witness.Impl implements Witness.Li
             .createTaskBuilder()
             .async()
             .execute(() -> {
-                try (final DSLContext context = this.databaseManager.createContext(true)) {
+                try (final CloseableDSLContext context = this.databaseManager.createContext(true)) {
                     int result;
 
                     if (!infinite) {
