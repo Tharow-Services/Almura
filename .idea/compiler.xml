@@ -25,9 +25,8 @@
     <bytecodeTargetLevel target="25" />
   </component>
   <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_STRING" value="-encoding utf8" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Almura.main" options="" />
+      <module name="Almura.main" options="-AmappingTypes=tsrg -AdefaultObfuscationEnv=searge -AreobfTsrgFile=$PROJECT_DIR$/build/cleanroom_gradle/userdev/mcp2srg.tsrg -AoutRefMapFile=$PROJECT_DIR$/build/classes/java/main/mixins.almura.refmap.json" />
     </option>
   </component>
 </project>

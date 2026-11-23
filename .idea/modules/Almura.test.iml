@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="Almura:test" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="com.almuradev" external.system.module.type="sourceSet" external.system.module.version="mc[1.12.2]-forge[2838]-sf[7.4.5]-b123" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="Almura:test" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="com.almuradev" external.system.module.type="sourceSet" external.system.module.version="mc[1.12.2]-cleanroom[0.7.14-alpha]-forge[2838]-sf[7.4.5]-b300" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="minecraft" name="Minecraft">
       <configuration>
@@ -24,6 +24,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Almura.main" />
     <orderEntry type="module-library">
+      <library name="Gradle: nucleus-api-2.4.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/nucleus-api-2.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="Gradle: com.cleanroommc:cleanroom-userdev:0.7.14-alpha">
         <ANNOTATIONS>
           <root url="jar://$APPLICATION_PLUGINS_DIR$/Minecraft Development/lib/resources/externalAnnotations.jar!/" />
@@ -46,11 +55,10 @@
     <orderEntry type="library" name="Gradle: net.kyori:text-serializer-legacy:3.0.4" level="project" />
     <orderEntry type="library" name="Gradle: net.kyori:event-api:5.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: net.kyori:event-method:3.0.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.spongepowered:spongeapi:7.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.spongepowered:spongeapi:javadoc:7.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.spongepowered:spongecommon:dev:1.12.2-7.4.7" level="project" />
+    <orderEntry type="library" name="Gradle: curse.maven:spongeforge-1279505:8530444" level="project" />
     <orderEntry type="library" name="Gradle: io.github.nucleuspowered:nucleus-api:2.4.0" level="project" />
     <orderEntry type="library" name="Gradle: net.luckperms:api:5.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: com.griefdefender:api:2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: net.industrial-craft:industrialcraft-2:api:2.8.220-ex112" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: net.kyori:adventure-api:4.9.3" level="project" />
@@ -138,18 +146,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.inject:guice:4.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.inject.extensions:guice-assistedinject:4.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.inject.extensions:guice-multibindings:4.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.errorprone:error_prone_annotations:2.48.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.ben-manes.caffeine:caffeine:2.5.4" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.ben-manes.caffeine:guava:2.5.4" level="project" />
-    <orderEntry type="library" name="Gradle: org.spongepowered:plugin-meta:0.4.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.spongepowered:configurate-hocon:3.7.2" level="project" />
-    <orderEntry type="library" name="Gradle: org.spongepowered:configurate-yaml:3.7.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.flowpowered:flow-math:1.0.3" level="project" />
-    <orderEntry type="library" name="Gradle: com.flowpowered:flow-noise:1.0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-debug-all:5.2" level="project" />
-    <orderEntry type="library" name="Gradle: org.spongepowered:mixin:0.8" level="project" />
-    <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:2.6.3" level="project" />
-    <orderEntry type="library" name="Gradle: com.h2database:h2:1.4.196" level="project" />
+    <orderEntry type="library" name="Gradle: org.spongepowered:mixin:0.8-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: net.kyori:adventure-key:4.9.3" level="project" />
     <orderEntry type="library" name="Gradle: net.kyori:examination-api:1.3.0" level="project" />
     <orderEntry type="library" name="Gradle: net.kyori:examination-string:1.3.0" level="project" />
@@ -159,6 +156,8 @@
     <orderEntry type="library" name="Gradle: net.kyori:feature:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: net.kyori:fragment:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.jdom:jdom2:2.0.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.spongepowered:spongeapi:7.2.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.spongepowered:spongeapi:javadoc:7.2.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: net.kyori:xml:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: redis.clients:jedis:3.2.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-pool2:2.6.2" level="project" />
@@ -203,18 +202,37 @@
     <orderEntry type="library" name="Gradle: io.netty:netty-codec-classes-quic:4.2.16.Final" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:failureaccess:1.0.3" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.errorprone:error_prone_annotations:2.48.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.j2objc:j2objc-annotations:3.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: biz.aQute.bnd:biz.aQute.bnd.annotation:7.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.osgi:org.osgi.annotation.bundle:2.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.osgi:org.osgi.annotation.versioning:1.1.2" level="project" />
     <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Gradle: aopalliance:aopalliance:1.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.typesafe:config:1.4.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.ben-manes.caffeine:caffeine:2.5.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.ben-manes.caffeine:guava:2.5.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.spongepowered:plugin-meta:0.4.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.spongepowered:configurate-hocon:3.6.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.spongepowered:configurate-yaml:3.6.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.flowpowered:flow-math:1.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.flowpowered:flow-noise:1.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.reactivestreams:reactive-streams:1.0.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.osgi:org.osgi.resource:1.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.osgi:org.osgi.service.serviceloader:1.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.typesafe:config:1.3.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.yaml:snakeyaml:1.18" level="project" />
+    <orderEntry type="module-library" scope="RUNTIME">
+      <library name="Gradle: nucleus-2.4.2-all.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/nucleus-2.4.2-all.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.kyori:adventure-api:4.11.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.cleanroommc:strip-latest-forge-requirements:dev:1.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: curse.maven:fugue-1005815:5312071" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.javassist:javassist:3.32.0-GA" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.logging.log4j:log4j-slf4j2-impl:2.26.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:jaxb-runtime:4.0.9" level="project" />
@@ -224,14 +242,14 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.logging.log4j:log4j-core:2.26.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.checkerframework:checker-qual:3.12.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.inject:guice:4.2.3" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.logging.log4j:log4j-slf4j-impl:2.15.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.mariadb.jdbc:mariadb-java-client:2.6.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.xerial:sqlite-jdbc:3.20.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.spongepowered:spongeapi:7.3.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.spongepowered:spongeapi:javadoc:7.3.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: io.leangen.geantyref:geantyref:1.3.11" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.kyori:adventure-text-serializer-legacy:4.11.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.kyori:adventure-text-serializer-plain:4.11.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.kyori:adventure-text-serializer-gson:4.11.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.kyori:adventure-key:4.11.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: zone.rong:mixinbooter:9.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.angus:angus-activation:2.0.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:txw2:4.0.9" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-transport-native-epoll:linux-aarch_64:4.2.16.Final" level="project" />
@@ -249,6 +267,9 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-codec-native-quic:osx-aarch_64:4.2.16.Final" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-codec-native-quic:osx-x86_64:4.2.16.Final" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-codec-native-quic:windows-x86_64:4.2.16.Final" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.spongepowered:configurate-hocon:3.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.spongepowered:configurate-yaml:3.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="Almura.main" />
 </module>

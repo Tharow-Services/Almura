@@ -36,8 +36,9 @@ public class Almura implements com.almuradev.almura.shared.plugin.Plugin {
     public static boolean isShuttingDown = false;
     public static NetworkManager networkManager;
     // Set in build.gradle (ext.internalBuild), which Gradle writes in here as it compiles; "dev" when compiled as is (an IntelliJ run)
-    private static final String INTERNAL_BUILD = "@internalBuild@";
-    public static String buildNumber = INTERNAL_BUILD.startsWith("@") ? "dev" : "b" + INTERNAL_BUILD;
+    private static final String INTERNAL_BUILD = "{{ version }}";
+    @SuppressWarnings("ConstantValue")
+    public static String buildNumber = INTERNAL_BUILD.startsWith("{") ? "dev" : "b" + INTERNAL_BUILD;
 
     @SidedProxy(
             modId = ID,

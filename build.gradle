@@ -7,12 +7,17 @@ plugins {
     id 'com.gradleup.shadow' version '9.6.1'
     id 'org.jooq.jooq-codegen-gradle' version '3.21.9'
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.4.1'
+    id("net.kyori.blossom") version "2.2.0"
     //id 'org.spongepowered.gradle.plugin' version '2.5.0'
     //id("org.spongepowered.plugin") version "0.9.0"
 }
 
 base {
     archivesName = project.name.toLowerCase()
+}
+
+compileJava {
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_25
 }
 
 repositories {
@@ -28,12 +33,12 @@ repositories {
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
     maven {
-        name = 'centeral Snapshot'
+        name = 'Central Snapshot'
         url = ' https://central.sonatype.com/repository/maven-snapshots/'
     }
     maven {
-        name 'drnaylor-minecraft'
-        url 'https://repo.drnaylor.co.uk/artifactory/list/minecraft'
+        name = 'drnaylor-minecraft'
+        url = 'https://repo.drnaylor.co.uk/artifactory/list/minecraft'
     }
     maven {
         name = 'sponge'
@@ -44,6 +49,7 @@ repositories {
         url = 'https://repo.codemc.org/repository/maven-public'
     }
     maven {
+        name = 'UltimateChat'
         url = "https://raw.githubusercontent.com/FabioZumbi12/UltimateChat/mvn-repo"
     }
     maven {
@@ -64,7 +70,7 @@ repositories {
     }
     maven {
         name = "Tharow Services"
-        url 'https://t-0.cc/maven/'
+        url = 'https://t-0.cc/maven/'
     }
     maven {
         name = "Mojang"
@@ -73,8 +79,8 @@ repositories {
     exclusiveContent {
         forRepository {
             maven {
-                name 'CurseMaven'
-                url 'https://curse.cleanroommc.com'
+                name = 'CurseMaven'
+                url = 'https://curse.cleanroommc.com'
             }
         }
         filter {
@@ -86,9 +92,10 @@ repositories {
 
 dependencies {
     //noinspection DependencyNotationArgument
-    implementation cleanroom.userdev(cleanroom_version) {
-        accessTransformers.from('src/main/resources/META-INF/almura_at.cfg') // Optional
+    implementation cleanroom.userdev(project.cleanroom_version) {
+        accessTransformers.from('src/main/resources/META-INF/almura_at.cfg')
     }
+    runtimeOnly 'com.cleanroommc:strip-latest-forge-requirements:1.0'
     //implementation cleanroom.userdev(cleanroom_version)
     implementation 'net.kyori:indigo:1.0.0-SNAPSHOT'
     implementation 'net.kyori:lunar:1.0.5-SNAPSHOT'
@@ -99,14 +106,17 @@ dependencies {
     implementation "net.kyori:event-api:3.0.0"
     implementation "net.kyori:event-api:5.0.0-SNAPSHOT"
     implementation "net.kyori:event-method:3.0.0"
-    implementation "org.spongepowered:spongeapi:7.5.0-SNAPSHOT"
-    implementation "org.spongepowered:spongecommon:1.12.2-7.4.7:dev"
-    //implementation "org.spongepowered:spongeforge:"
-//    implementaiion deobf("curse.maven:spongeforge-1279505:8530444")
+//    implementation "org.spongepowered:spongeapi:7.5.0-SNAPSHOT"
+//    implementation "org.spongepowered:spongecommon:1.12.2-7.4.7:dev"
+    //noinspection DependencyNotationArgument
+    implementation cleanroom.deobf("curse.maven:spongeforge-1279505:8530444")
     implementation 'io.github.nucleuspowered:nucleus-api:2.4.0'
+    runtimeOnly files('lib/nucleus-2.4.2-all.jar')
+    implementation files('lib/nucleus-api-2.4.0.jar')
+    runtimeOnly 'curse.maven:fugue-1005815:5312071'
     // Remember to update this entry for LuckPerms if the API gets behind the currently plugin version being used.
     implementation "net.luckperms:api:5.3"
-    compileOnly 'com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT'
+    implementation 'com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT'
     // Attempt to use GD 2.0.3 API change.
     implementation 'com.griefdefender:api:2.1.0-SNAPSHOT'
     // IndustrialCraft 2 energy API for machines. Optional at runtime: only used when IC2 is installed, so it's neither shaded nor required.
@@ -122,10 +132,10 @@ dependencies {
     implementation "org.jooq:jooq-meta:${project.jooqVersion}"
     implementation "org.jooq:jooq-codegen:${project.jooqVersion}"
     jooqCodegen("org.jooq:jooq-meta-extensions:${project.jooqVersion}")
+
 }
 
-ext.internalBuild = '123'
-version = "mc[${project.minecraftVersion}]-forge[${project.forgeBuild}]-sf[${project.spongeImplVersion.split("-")[2]}]-b${project.internalBuild}"
+version = "mc[${project.minecraftVersion}]-cleanroom[${project.cleanroom_version}]-forge[${project.forgeBuild}]-sf[${project.spongeImplVersion.split("-")[2]}]-b${project.build_number}"
 
 idea {
     module {
@@ -140,6 +150,9 @@ idea {
                             (project.name + ".main"): tasks.compileJava.options.compilerArgs.collect { '"' + it + '"' }.join(' ')
                     ]
                 }
+            }
+            taskTriggers {
+                afterSync 'cleanroomAfterSync'
             }
         }
     }
@@ -159,7 +172,7 @@ cleanroom {
 jar {
 //    classifier 'base'
     exclude 'log4j2-test.xml'
-
+    archiveClassifier = 'dev'
     manifest {
         attributes(
                 'Built-By': System.properties['user.name'],
@@ -168,7 +181,7 @@ jar {
                 'Implementation-Version': version,
                 'Implementation-Vendor': url,
                 'FMLAT': "${project.name.toLowerCase()}_at.cfg",
-                'FMLCorePlugin': 'com.almuradev.almura.AlmuraLoadingPlugin',
+                'FMLCorePlugin': 'net.tharow.minecraft.MultiCoreModLoader',
                 'FMLCorePluginContainsFMLMod': true,
                 'ForceLoadAsMod': true,
                 'MixinConfigs': [
@@ -191,7 +204,30 @@ jar {
                         'mixins.almura.feature.sign.json',
                         'mixins.almura.feature.title.json',
                         'mixins.almura.feature.biome.json',
-                        'mixins.almura.feature.nick.json'
+                        'mixins.almura.feature.nick.json',
+                        'mixins.common.api.json', //From here on is sponge
+                        'mixins.common.bungeecord.json',
+                        'mixins.common.concurrentchecks.json',
+                        'mixins.common.core.json',
+                        'mixins.common.entityactivation.json',
+                        'mixins.common.entitycollisions.json',
+                        'mixins.common.exploit.json',
+                        'mixins.common.movementchecks.json',
+                        'mixins.common.multi-world-command.json',
+                        'mixins.common.optimization.json',
+                        'mixins.common.realtime.json',
+                        'mixins.common.tileentityactivation.json',
+                        'mixins.common.tracking.json',
+                        'mixins.common.vanilla-command.json',
+                        'mixins.forge.api.json',
+                        'mixins.forge.api.preinit.json',
+                        'mixins.forge.brokenmods.json',
+                        'mixins.forge.bungeecord.json',
+                        'mixins.forge.core.json',
+                        'mixins.forge.entityactivation.json',
+                        'mixins.forge.optimization.json',
+                        'mixins.forge.preinit.json',
+                        'mixins.cleanroom.nucleus.json'
                 ].join(','),
                 'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
                 'TweakOrder': 0
@@ -203,6 +239,7 @@ shadowJar {
     //mainSpec.sourcePaths.clear()
 //    dependsOn reobfJar
 //    classifier ''
+    archiveClassifier = 'uberdev'
     exclude 'dummyThing'
     relocate 'com.typesafe.config', 'configurate.typesafe.config'
 
@@ -210,7 +247,8 @@ shadowJar {
     relocate 'net.kyori.event', 'com.griefdefender.lib.kyori.event'
     relocate 'net.kyori.adventure', 'com.griefdefender.lib.kyori.adventure'
     dependencies {
-
+//        include dependency('com.almuradev:malisiscore:1.12.2-6.6.0-SNAPSHOT')
+//        include dependency("curse.maven:spongeforge-1279505:8530444")
         include dependency('com.almuradev:toolbox')
         include dependency('com.fasterxml.jackson.core:jackson-core')
         include dependency('com.google.inject.extensions:guice-assistedinject')
@@ -225,6 +263,11 @@ shadowJar {
         include dependency('ninja.leaping.configurate:configurate-json')
         include dependency('io.github.nucleuspowered:nucleus-api')
         include dependency('org.jooq:jooq')
+        include dependency('org.apache.logging.log4j:log4j-slf4j-impl:2.15.0')
+        include dependency('com.zaxxer:HikariCP:2.6.3')
+        include dependency('org.mariadb.jdbc:mariadb-java-client:2.6.0')
+        include dependency('com.h2database:h2:1.4.196')
+        include dependency('org.xerial:sqlite-jdbc:3.20.0')
         // Shade GD API because normally this doesn't load until PreInit an we need it during GameConstruct.
         include dependency('com.github.bloodmc:GriefDefenderAPI-2.0.0-Shaded')
         // The three following includes are shaded & relocated version of libraries used by GD 2.0 API
@@ -249,6 +292,14 @@ sourceSets {
     main {
         java {
             srcDirs += [generatedDir]
+        }
+        blossom {
+            javaSources {
+                property("version", project.version.toString())
+            }
+            resources {
+                property("version", project.build_number.toString())
+            }
         }
     }
 }
@@ -366,6 +417,11 @@ tasks.register('generateDatabaseClasses') {
     ]
 }
 
+configurations.configureEach {
+    resolutionStrategy {
+        force 'com.typesafe:config:1.3.1'
+    }
+}
 
 
 tasks.register('cleanDatabaseClasses') {
@@ -381,6 +437,9 @@ tasks.named('clean') {
     dependsOn('cleanDatabaseClasses')
 }
 
+reobfJar {
+    archiveClassifier = ''
+}
 // TODO: fundamental Foundation issue
 tasks.withType(JavaExec).configureEach {
     systemProperty 'foundation.loadsall', 'true'
